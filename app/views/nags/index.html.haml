@@ -1,0 +1,23 @@
+%h1 My Nags
+%p
+  Signed in as
+  =@user.full_name
+  | 
+  =link_to "Sign Out", destroy_user_session_path, method: :delete
+%p=link_to "New Nag", new_nag_path
+
+%table
+  %thead
+    %tr
+      %th
+        Nag Contents
+      %th
+        Status
+  %tbody
+    -@nags.each do |nag|
+      %tr
+        %td
+          =nag.contents
+        %td
+          =nag.status
+
