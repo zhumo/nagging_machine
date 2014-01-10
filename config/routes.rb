@@ -1,4 +1,9 @@
 NaggingMachine::Application.routes.draw do
+  devise_for :users
+  root 'home#index'
+  get 'mynags', to: 'nags#index'
+  resources :nags, only: [:new, :index, :create]
+#  resources :nags, only: [:index]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
