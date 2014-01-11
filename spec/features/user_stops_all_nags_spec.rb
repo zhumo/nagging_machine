@@ -16,6 +16,7 @@ feature 'user stops all nags' do
     click_on "Stop All Nags"
 
     expect(page).to have_content("stopped")
+    expect(page).to_not have_content("active")
   end
 
 end
