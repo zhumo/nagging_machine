@@ -4,7 +4,8 @@ NaggingMachine::Application.routes.draw do
   get 'mynags', to: 'nags#index'
   put 'nags/:id/done', to: 'nags#done', as: :done_nag
   put 'stop_nags', to: 'commands#stop'
-  resources :nags, only: [:new, :index, :create]
+  put 'restart_nags', to: 'commands#restart'
+  resources :nags, only: [:new, :index, :create, :edit, :update]
 #  resources :nags, only: [:index]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

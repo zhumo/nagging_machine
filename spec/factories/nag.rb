@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :nag do
-    contents "nag"
+    sequence :contents do |n|
+      "nag#{n}"
+    end
   end
 end

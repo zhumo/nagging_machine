@@ -1,5 +1,7 @@
 class Nag < ActiveRecord::Base
   validates_presence_of :contents
+  validates_presence_of :user_id
+  validates_presence_of :status
 
   belongs_to :user, inverse_of: :nags
 

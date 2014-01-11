@@ -5,7 +5,10 @@
   | 
   =link_to "Sign Out", destroy_user_session_path, method: :delete
 %p=link_to "New Nag", new_nag_path
-%p=link_to "Stop All Nags", stop_nags_path, method: :put
+-if @user.active?
+  %p=link_to "Stop All Nags", stop_nags_path, method: :put
+-else
+  %p=link_to "Restart All Nags", restart_nags_path, method: :put
 
 %table
   %thead
@@ -23,4 +26,6 @@
           =nag.display_status
         %td
           =link_to "Done", done_nag_path(nag), method: :put
+        %td
+          =link_to "Edit", edit_nag_path(nag)
 

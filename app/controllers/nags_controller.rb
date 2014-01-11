@@ -20,6 +20,10 @@ class NagsController < ApplicationController
     end
   end
 
+  def edit
+    @nag = Nag.find(params[:id])
+  end
+
   def done
     @nag = Nag.find(params[:id])
     @nag.declare_done

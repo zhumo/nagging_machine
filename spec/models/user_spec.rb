@@ -35,5 +35,17 @@ describe User do
       expect(user.full_name).to eq("Joe Schmoe")
     end
   end
-    
+
+  describe 'active? method' do
+    it "should return true if the user's status is active" do
+      user = FactoryGirl.create(:user)
+      expect(user.active?).to be_true
+    end
+
+    it "should return false if the user's status is stopped" do
+      user = FactoryGirl.create(:user, status: "stopped")
+      expect(user.active?).to be_false
+    end
+  end
+
 end
