@@ -3,7 +3,7 @@ class NagsController < ApplicationController
 
   def index
     @user = User.find(current_user.id)
-    @nags = @user.nags
+    @nags = @user.nags.where(status: "active")
   end
 
   def new
@@ -18,6 +18,12 @@ class NagsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def done
+    @nag = Nag.find(params[:id])
+    @nag.declare_done
+    redirect_to mynags_path
   end
 
   private
