@@ -26,7 +26,7 @@ describe User do
   end
 
   describe 'associations' do
-    it {should have_many(:nags)}
+    it {should have_many(:nags).dependent(:destroy)}
   end
 
   describe 'full_name method' do
