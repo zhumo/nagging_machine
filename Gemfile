@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'devise'
 gem 'database_cleaner'
+gem 'twilio-ruby'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
@@ -47,6 +48,7 @@ end
 # gem 'debugger', group: [:development, :test]
 gem 'haml'
 gem 'simple_form'
+gem 'dotenv-rails'
 
 group :test do
   gem 'factory_girl_rails'

@@ -5,9 +5,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :trackable
 
-  validates_presence_of :password
   validates_confirmation_of :password
-  validates_length_of :password, within: 6..128
+  validates_length_of :password, within: 6..128, allow_nil: true
 
   validates_format_of :phone_number, with: /\A\d{10}\z/, message: "must be a ten-digit number"
   validates_presence_of :phone_number

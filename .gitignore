@@ -16,3 +16,4 @@
 /tmp
 .secret
 config/database.yml
+.env
