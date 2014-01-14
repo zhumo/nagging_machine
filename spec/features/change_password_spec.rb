@@ -6,7 +6,7 @@ feature 'change password' do
   scenario 'user changes password' do
     sign_in_as(user)
 
-    click_on "Change Password"
+    click_on "Edit Account"
 
     fill_in "New Password", with: "somethingelse"
     fill_in "Password Confirmation", with: "somethingelse"

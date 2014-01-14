@@ -10,4 +10,11 @@ class CommandsController < ApplicationController
     @user.update_attribute(:status, "active")
     redirect_to mynags_path
   end
+  
+  def done
+    @nag = Nag.find(params[:id])
+    @nag.declare_done
+    redirect_to mynags_path
+  end
+
 end

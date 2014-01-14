@@ -15,7 +15,6 @@ describe User do
     it {should_not have_valid(:phone_number).when("abc","!@#","123456789","12345678901")}
     it {should have_valid(:phone_number).when("1234567890")}
 
-    it {should validate_presence_of(:password)}
     it {should validate_confirmation_of(:password)}
     it {should ensure_length_of(:password).is_at_most(128).is_at_least(6)}
 

@@ -24,12 +24,6 @@ class NagsController < ApplicationController
     @nag = Nag.find(params[:id])
   end
 
-  def done
-    @nag = Nag.find(params[:id])
-    @nag.declare_done
-    redirect_to mynags_path
-  end
-
   private
 
   def nag_params

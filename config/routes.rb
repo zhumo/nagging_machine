@@ -2,7 +2,7 @@ NaggingMachine::Application.routes.draw do
   devise_for :users
   root 'home#index'
   get 'mynags', to: 'nags#index'
-  put 'nags/:id/done', to: 'nags#done', as: :done_nag
+  put 'nags/:id/done', to: 'commands#done', as: :done_nag
   put 'stop_nags', to: 'commands#stop'
   put 'restart_nags', to: 'commands#restart'
   resources :nags, only: [:new, :index, :create, :edit, :update]
