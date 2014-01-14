@@ -12,4 +12,18 @@ class Nag < ActiveRecord::Base
   def display_status
     user.status == "stopped" ? "stopped" : status
   end
+
+  def self.route_incoming(params)
+    self.send_unknown_command_error(params[:From])
+  end
+
+  def self.send_unknown_command_error(recipient_phone)
+    client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'],ENV['TWILIO_AUTH_TOKEN'])
+
+    client.account.messages.create(
+      from: ENV['TWILIO_PHONE_NUMBER'],
+      to: recipient_phone,
+      body: "Sorry, that is not a recognized command."
+    )
+  end
 end
