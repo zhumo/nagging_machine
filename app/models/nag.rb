@@ -1,4 +1,5 @@
 class Nag < ActiveRecord::Base
+  SID = 
   validates_presence_of :contents
   validates_presence_of :user_id
   validates_presence_of :status
@@ -11,5 +12,13 @@ class Nag < ActiveRecord::Base
 
   def display_status
     user.status == "stopped" ? "stopped" : status
+  end
+
+  def route_incoming(params)
+   if params[:Body] == "hello"
+    Nag.send_reply_hello
+   else
+     Nag.send_unknown_command_reply
+   end
   end
 end

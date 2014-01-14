@@ -17,4 +17,9 @@ class CommandsController < ApplicationController
     redirect_to mynags_path
   end
 
+  def hook
+    Nag.route_incoming(params)
+    render nothing: true
+  end
+
 end

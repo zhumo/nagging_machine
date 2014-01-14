@@ -5,6 +5,7 @@ NaggingMachine::Application.routes.draw do
   put 'nags/:id/done', to: 'commands#done', as: :done_nag
   put 'stop_nags', to: 'commands#stop'
   put 'restart_nags', to: 'commands#restart'
+  put '/h', to: 'commands#hook'
   resources :nags, only: [:new, :index, :create, :edit, :update]
 #  resources :nags, only: [:index]
   # The priority is based upon order of creation: first created -> highest priority.
