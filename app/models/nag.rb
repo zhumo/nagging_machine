@@ -14,9 +14,9 @@ class Nag < ActiveRecord::Base
   end
   
   class << self
-  SID = ENV['TWILIO_ACCOUNT_SID']
-  AUTH_TOKEN = ENV['TWILIO_AUTH_TOKEN']
-  TWILIO_PHONE_NUMBER = ENV['TWILIO_PHONE_NUMBER']
+    SID = ENV['TWILIO_ACCOUNT_SID']
+    AUTH_TOKEN = ENV['TWILIO_AUTH_TOKEN']
+    TWILIO_PHONE_NUMBER = ENV['TWILIO_PHONE_NUMBER']
 
     def route_incoming(params)
       message_body = params[:Body]
@@ -25,7 +25,7 @@ class Nag < ActiveRecord::Base
       if message_body.downcase == "command list"
         Nag.send_command_list(message_sender)
       else
-        Nag.send_unknown_command_reply
+        Nag.send_unknown_command_reply(message_sender)
       end
     end
 
@@ -42,6 +42,11 @@ class Nag < ActiveRecord::Base
     def send_command_list(recipient_phone)
       command_list = '"Stop" to stop all nags. "Restart" to restart nags, if stopped. "Done" to declare the last nag that was sent to you as done. "Remind me to <text>" to create new nag.'
       Nag.send_message(recipient_phone,command_list)
+    end
+
+    def send_unknown_command_reply(recipient_phone)
+      unknown_command_reply = "Command not recognized. Respond with \"Command list\" for a list of recognized commands"
+      Nag.send_message(recipient_phone,unknown_command_reply)
     end
   end
 end
