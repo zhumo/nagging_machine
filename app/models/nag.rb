@@ -22,7 +22,7 @@ class Nag < ActiveRecord::Base
       message_body = params[:Body]
       message_sender = params[:From]
 
-      if User.pluck(:phone_number).include?(message_sender.sub("+1",""))
+      if !User.pluck(:phone_number).include?(message_sender.sub("+1",""))
         Nag.send_unknown_user_message(message_sender)
       elsif message_body.downcase == "command list"
         Nag.send_command_list(message_sender)
