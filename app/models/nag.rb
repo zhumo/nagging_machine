@@ -25,6 +25,9 @@ class Nag < ActiveRecord::Base
 
       if !User.pluck(:phone_number).include?(message_sender.sub("+1",""))
         Nag.send_unknown_user_message(message_sender)
+      elsif message_body.downcase == "done"
+        user.nags.order(:last_ping_time).last.declare_done
+        Nag.send_nag_done_message(message_sender)
       elsif message_body.downcase == "stop nags"
         if user.status != "stopped"
           user.stop_all_nags
@@ -99,6 +102,11 @@ class Nag < ActiveRecord::Base
     def send_already_active_message(recipient_phone)
       already_active_message = "Your nags are already active. Respond with \"Stop nags\" to stop all nags."
       Nag.send_message(recipient_phone, already_active_message)
+    end
+
+    def send_nag_done_message(recipient_phone)
+      nag_done_message = "Good job! I'll stop nagging you about it now."
+      Nag.send_message(recipient_phone, nag_done_message)
     end
 
   end
