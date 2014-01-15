@@ -19,7 +19,7 @@ class Nag < ActiveRecord::Base
   
   class << self
     def route_incoming(params)
-      if params[:Body].downcase == "commands"
+      if params[:Body].downcase == "command list"
         Nag.send_command_list(params[:From])
       else
         Nag.send_unknown_command_reply
