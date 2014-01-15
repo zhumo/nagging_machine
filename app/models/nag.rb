@@ -6,7 +6,6 @@ class Nag < ActiveRecord::Base
   belongs_to :user, inverse_of: :nags
 
   def declare_done
-    binding.pry
     update_attributes(status: "done")
   end
 
