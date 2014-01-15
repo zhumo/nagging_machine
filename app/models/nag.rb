@@ -21,16 +21,23 @@ class Nag < ActiveRecord::Base
     def route_incoming(params)
       message_body = params[:Body]
       message_sender = params[:From]
+      user = User.find_by(phone_number: message_sender.sub("+1",""))
 
       if !User.pluck(:phone_number).include?(message_sender.sub("+1",""))
         Nag.send_unknown_user_message(message_sender)
       elsif message_body.downcase == "stop nags"
-        user = User.find_by(phone_number: message_sender.sub("+1",""))
         if user.status != "stopped"
           user.stop_all_nags
           Nag.send_stop_confirm_message(message_sender)
         else
           Nag.send_already_stopped_message(message_sender)
+        end
+      elsif message_body.downcase == "restart nags"
+        if user.status != "active"
+          user.restart_all_nags
+          Nag.send_restart_confirm_message(message_sender)
+        else
+          Nag.send_already_active_message(message_sender)
         end
       elsif message_body.downcase == "command list"
         Nag.send_command_list(message_sender)
@@ -84,6 +91,15 @@ class Nag < ActiveRecord::Base
       Nag.send_message(recipient_phone,already_stopped_message)
     end
 
+    def send_restart_confirm_message(recipient_phone)
+      restart_confirm_message = "Your nags have been restarted. Welcome back!"
+      Nag.send_message(recipient_phone,restart_confirm_message)
+    end
+    
+    def send_already_active_message(recipient_phone)
+      already_active_message = "Your nags are already active. Respond with \"Stop\" to stop all nags."
+      Nag.send_message(recipient_phone, already_active_message)
+    end
 
   end
 end
