@@ -82,12 +82,12 @@ class Nag < ActiveRecord::Base
     end
 
     def send_stop_confirm_message(recipient_phone)
-      stop_confirm_message = "All nags stopped. Respond with \"Restart\" to restart the nagging."
+      stop_confirm_message = "All nags stopped. Respond with \"Restart nags\" to restart the nagging."
       Nag.send_message(recipient_phone, stop_confirm_message)
     end
 
     def send_already_stopped_message(recipient_phone)
-      already_stopped_message = "Your nags are already stopped. Respond with \"Restart\" to restart the nagging."
+      already_stopped_message = "Your nags are already stopped. Respond with \"Restart nags\" to restart the nagging."
       Nag.send_message(recipient_phone,already_stopped_message)
     end
 
@@ -97,7 +97,7 @@ class Nag < ActiveRecord::Base
     end
     
     def send_already_active_message(recipient_phone)
-      already_active_message = "Your nags are already active. Respond with \"Stop\" to stop all nags."
+      already_active_message = "Your nags are already active. Respond with \"Stop nags\" to stop all nags."
       Nag.send_message(recipient_phone, already_active_message)
     end
 
