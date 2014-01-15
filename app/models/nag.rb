@@ -22,19 +22,22 @@ class Nag < ActiveRecord::Base
       message_body = params[:Body]
       message_sender = params[:From]
 
-      if message_body.downcase == "command list"
+      if User.pluck(:phone_number).include?(message_sender.sub("+1",""))
+        Nag.send_unknown_user_message(message_sender)
+      elsif message_body.downcase == "command list"
         Nag.send_command_list(message_sender)
       elsif message_body.downcase.start_with?("remind me to")
         Nag.create_nag(message_sender, message_body)
       else
-        Nag.send_unknown_command_reply(message_sender)
+        Nag.send_unknown_command_message(message_sender)
       end
     end
 
     def create_nag(user_phone_number, nag_contents)
       formatted_contents = nag_contents.downcase.sub("remind me to ","").capitalize
       formatted_phone_number = user_phone_number.sub("+1","")
-      created_nag = Nag.create(contents: formatted_contents, user_id: User.find_by(phone_number: formatted_phone_number).id)
+
+      Nag.create(contents: formatted_contents, user_id: User.find_by(phone_number: formatted_phone_number).id)
       Nag.send_message(user_phone_number,"OK. I will remind you")
     end
 
@@ -53,9 +56,14 @@ class Nag < ActiveRecord::Base
       Nag.send_message(recipient_phone,command_list)
     end
 
-    def send_unknown_command_reply(recipient_phone)
+    def send_unknown_command_message(recipient_phone)
       unknown_command_reply = "Command not recognized. Respond with \"Command list\" for a list of recognized commands"
       Nag.send_message(recipient_phone,unknown_command_reply)
+    end
+
+    def send_unknown_user_message(recipient_phone)
+      unknown_user_message = "I don't recognize your number. Sign up for The Nagging Machine at www.thenaggingmachine.come"
+      Nag.send_message(recipient_phone, unknown_user_message)
     end
   end
 end
