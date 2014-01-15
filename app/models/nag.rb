@@ -32,8 +32,8 @@ class Nag < ActiveRecord::Base
     end
 
     def create_nag(user_phone_number, nag_contents)
-      formatted_contents = nag_contents.gsub("remind me to ","")
-      formatted_phone_number = user_phone_number.gsub("+1","")
+      formatted_contents = nag_contents.downcase.sub("remind me to ","").capitalize
+      formatted_phone_number = user_phone_number.sub("+1","")
       created_nag = Nag.create(contents: formatted_contents, user_id: User.find_by(phone_number: formatted_phone_number).id)
       Nag.send_message(user_phone_number,"OK. I will remind you to #{created_nag.contents}")
     end
