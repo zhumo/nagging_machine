@@ -30,12 +30,10 @@ class Nag < ActiveRecord::Base
     end
 
     def send_message(recipient_phone,body)
-      puts SID
-      puts AUTH_TOKEN
       client = Twilio::REST::Client.new(SID, AUTH_TOKEN)
 
       client.account.messages.create(
-        from: TWLIO_PHONE_NUMBER,
+        from: TWILIO_PHONE_NUMBER,
         to: recipient_phone,
         body: body
       )
