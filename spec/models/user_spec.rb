@@ -37,13 +37,111 @@ describe User do
 
   describe 'active? method' do
     it "should return true if the user's status is active" do
-      user = FactoryGirl.create(:user)
+      user = FactoryGirl.create(:user, status: "active")
       expect(user.active?).to be_true
     end
 
     it "should return false if the user's status is stopped" do
       user = FactoryGirl.create(:user, status: "stopped")
       expect(user.active?).to be_false
+    end
+  end
+
+  describe "stopped? method" do
+    it "should return true if the user is stopped" do
+      user = FactoryGirl.create(:user, status: "stopped")
+
+      expect(user.stopped?).to be_true
+    end
+
+    it "should return false if the user is 'active' or 'awaiting confirmation'" do
+      user = FactoryGirl.create(:user, status: "active")
+
+      expect(user.stopped?).to be_false
+
+      user.status = "awaiting confirmation"
+
+      expect(user.stopped?).to be_false
+    end
+  end
+
+  describe "stop_all_nags method" do
+    it "should change an active user's status to 'stopped'" do
+      user = FactoryGirl.create(:user, status: "active")
+
+      user.stop_all_nags
+
+      expect(user.status).to eq("stopped")
+    end
+
+    it "should not change an awaiting confirmation user's status to 'stopped'" do
+      user = FactoryGirl.create(:user, status: "awaiting confirmation")
+
+      user.stop_all_nags
+      expect(user.status).to eq("awaiting confirmation")
+    end
+  end
+
+  describe "restart_all_nags method" do
+    it "should change a stopped user's status to 'active'" do
+      user = FactoryGirl.create(:user, status: "active")
+      
+      user.restart_all_nags
+      expect(user.status).to eq("active")
+    end
+
+    it "should not change an awaiting confirmation user's status to active'" do
+      user = FactoryGirl.create(:user, status: "awaiting confirmation")
+
+      user.restart_all_nags
+      expect(user.status).to eq("awaiting confirmation")
+    end
+  end
+
+  describe "confirm_phone_number" do
+    user = FactoryGirl.create(:user, status: "awaiting confirmation")
+  end
+
+  describe "last_ping" do
+    it "should return the last ping" do
+      user = FactoryGirl.create(:user, status: "active")
+      2.times do 
+        FactoryGirl.create(:nag, user_id: user.id)
+      end
+
+      last_nag = FactoryGirl.create(:nag, user_id: user.id)
+      
+      user.last_ping.should eq(last_nag)
+    end
+
+    it "should return nil if there is no ping" do
+      user = FactoryGirl.create(:user, status: "active")
+
+      user.last_ping.should be_nil
+    end
+  end
+
+  describe "generate_confirmation_code" do
+    it "should generate confirmation code and time stamp" do
+      user = FactoryGirl.create(:user)
+
+      user.generate_confirmation_code
+
+      expect(user.confirmation_code).to be_present
+      expect(user.confirmation_code_time).to be_present
+    end
+  end
+
+  describe "awaiting_confirmation?" do
+    it "should return true if there is a confirmation code" do
+      user = FactoryGirl.create(:user)
+      user.generate_confirmation_code
+      expect(user.awaiting_confirmation?).to be_true
+    end
+
+    it "should return false if there is no confirmation code" do
+      user = FactoryGirl.create(:user)
+      expect(user.awaiting_confirmation?).to be_false
     end
   end
 

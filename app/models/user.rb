@@ -25,11 +25,32 @@ class User < ActiveRecord::Base
     status == "active"
   end
 
+  def stopped?
+    status == "stopped"
+  end
+
   def stop_all_nags
-    update_attribute(:status, "stopped")
+    update_attribute(:status, "stopped") if status == "active"
   end
 
   def restart_all_nags
-    update_attribute(:status, "active")
+    update_attribute(:status, "active") if status == "stopped"
   end
+
+  def confirm_phone_number
+    update_attributes(confirmation_code: nil, confirmation_code_time: nil, status: "active")
+  end
+
+  def last_ping
+    nags.order(:last_ping_time).last
+  end
+  
+  def generate_confirmation_code
+    update_attributes(confirmation_code: sprintf("%04d",rand(10 ** 4)), confirmation_code_time: Time.now)
+  end
+
+  def awaiting_confirmation?
+    confirmation_code.present?
+  end
+
 end

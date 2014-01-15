@@ -1,6 +1,6 @@
 class AddStatusToUsers < ActiveRecord::Migration
   def up
-    add_column :users, :status, :string, null: false, default: "active"
+    add_column :users, :status, :string, null: false, default: "awaiting confirmation"
   end
 
   def down

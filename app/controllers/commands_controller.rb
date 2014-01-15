@@ -20,7 +20,7 @@ class CommandsController < ApplicationController
   end
 
   def hook
-    Nag.route_incoming(params)
+    Message.route_incoming(params)
     render nothing: true
   end
 
