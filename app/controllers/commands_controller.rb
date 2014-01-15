@@ -1,4 +1,5 @@
 class CommandsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, only: :hook
   def stop
     @user = current_user
     @user.update_attribute(:status, "stopped")

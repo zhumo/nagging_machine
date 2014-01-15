@@ -1,6 +1,5 @@
 class NagsController < ApplicationController
   before_filter :authenticate_user!
-  skip_before_filter :verify_authenticity_token, only: :hook
 
   def index
     @user = User.find(current_user.id)
