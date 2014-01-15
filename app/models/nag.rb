@@ -24,9 +24,17 @@ class Nag < ActiveRecord::Base
 
       if message_body.downcase == "command list"
         Nag.send_command_list(message_sender)
+      elsif message_body.downcase.start_with?("remind me to")
+        Nag.create_nag(message_sender, message_body)
       else
         Nag.send_unknown_command_reply(message_sender)
       end
+    end
+
+    def create_nag(user_phone_number, nag_contents)
+      formatted_contents = nag_contents.gsub("remind me to ","")
+      formatted_phone_number = user_phone_number.gsub("+1","")
+      Nag.create(contents: formatted_contents, user_id: User.find_by(phone_number: formatted_phone_number))
     end
 
     def send_message(recipient_phone,body)
