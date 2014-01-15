@@ -24,4 +24,12 @@ class User < ActiveRecord::Base
   def active?
     status == "active"
   end
+
+  def stop_all_nags
+    update_attribute(:status, "stopped")
+  end
+
+  def restart_all_nags
+    update_attribute(:status, "active")
+  end
 end

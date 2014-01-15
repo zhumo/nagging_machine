@@ -3,13 +3,13 @@ class CommandsController < ApplicationController
 
   def stop
     @user = current_user
-    @user.update_attribute(:status, "stopped")
+    @user.stop_all_nags
     redirect_to mynags_path
   end
 
   def restart
     @user = current_user
-    @user.update_attribute(:status, "active")
+    @user.restart_all_nags
     redirect_to mynags_path
   end
   
