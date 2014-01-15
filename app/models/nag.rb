@@ -24,7 +24,7 @@ class Nag < ActiveRecord::Base
 
       if !User.pluck(:phone_number).include?(message_sender.sub("+1",""))
         Nag.send_unknown_user_message(message_sender)
-      elsif message_body.downcase == "stop"
+      elsif message_body.downcase == "stop nags"
         user = User.find_by(phone_number: message_sender.sub("+1",""))
         if user.status != "stopped"
           user.stop_all_nags
