@@ -14,7 +14,6 @@ class CommandsController < ApplicationController
   end
   
   def done
-    binding.pry
     @nag = Nag.find(params[:id])
     @nag.declare_done
     redirect_to mynags_path

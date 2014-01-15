@@ -1,8 +1,4 @@
 class Nag < ActiveRecord::Base
-  SID = ENV['TWILIO_ACCOUNT_SID']
-  AUTH_TOKEN = ENV['TWILIO_AUTH_TOKEN']
-  TWILIO_PHONE_NUMBER = ENV['TWILIO_PHONE_NUMBER']
-
   validates_presence_of :contents
   validates_presence_of :user_id
   validates_presence_of :status
@@ -10,6 +6,7 @@ class Nag < ActiveRecord::Base
   belongs_to :user, inverse_of: :nags
 
   def declare_done
+    binding.pry
     update_attributes(status: "done")
   end
 
@@ -18,6 +15,9 @@ class Nag < ActiveRecord::Base
   end
   
   class << self
+  SID = ENV['TWILIO_ACCOUNT_SID']
+  AUTH_TOKEN = ENV['TWILIO_AUTH_TOKEN']
+  TWILIO_PHONE_NUMBER = ENV['TWILIO_PHONE_NUMBER']
 
     def route_incoming(params)
       message_body = params[:Body]
