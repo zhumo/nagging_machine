@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'user edits nag contents' do
-  let(:user) {FactoryGirl.create(:user)}
+  let(:user) {FactoryGirl.create(:user, status: "active")}
   let(:nag) {user.nags.create(contents: "something")}
   before :each do 
     user

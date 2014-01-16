@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature 'user signs up' do
   scenario 'user enters valid information' do
+    expect(Message).to receive(:send_message).with("+11234567890",Message::WELCOME_MESSAGE)
     visit new_user_registration_path
 
     fill_in "First Name", with: "John"
@@ -11,9 +12,20 @@ feature 'user signs up' do
     fill_in "Password Confirmation", with: "123456", match: :prefer_exact
 
     click_on "Submit"
+
+    user = User.find_by(phone_number: "1234567890")
+
+    expect(Message).to receive(:send_message).with(user.full_phone_number,Message::PHONE_CONFIRMATION_MESSAGE)
+    Message.route_incoming({From: user.full_phone_number, Body: user.confirmation_code})
+
+    visit current_path
+
+    user.reload
     
     expect(page).to have_content("John Doe")
     expect(page).to have_content("My Nags")
+    expect(user.confirmation_code).to be_nil
+    expect(user.confirmation_code_time).to be_nil
   end
 
   scenario 'user enters invalid information' do

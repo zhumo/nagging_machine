@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def full_phone_number
+    "+1#{phone_number}"
+  end
+
   def active?
     status == "active"
   end

@@ -133,15 +133,17 @@ describe User do
   end
 
   describe "awaiting_confirmation?" do
-    it "should return true if there is a confirmation code" do
-      user = FactoryGirl.create(:user)
-      user.generate_confirmation_code
+    it "should return true if the user's status is awaiting confirmation code" do
+      user = FactoryGirl.create(:unconfirmed_user)
       expect(user.awaiting_confirmation?).to be_true
     end
 
-    it "should return false if there is no confirmation code" do
+  end
+
+  describe "#full_phone_number" do
+    it "should return the phone number plus the +1 extension" do
       user = FactoryGirl.create(:user)
-      expect(user.awaiting_confirmation?).to be_false
+      expect(user.full_phone_number).to eq("+1#{user.phone_number}")
     end
   end
 end
