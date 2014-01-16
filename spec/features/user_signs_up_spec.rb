@@ -11,7 +11,7 @@ feature 'user signs up' do
     fill_in "Password Confirmation", with: "123456", match: :prefer_exact
 
     click_on "Submit"
-
+    
     expect(page).to have_content("John Doe")
     expect(page).to have_content("My Nags")
   end

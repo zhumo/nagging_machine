@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   end
 
   def awaiting_confirmation?
-    confirmation_code.present?
+    status == "awaiting confirmation"
   end
 
 end

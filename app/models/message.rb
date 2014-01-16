@@ -24,10 +24,8 @@ class Message < ActiveRecord::Base
       message_sender = params[:From]
       user = User.find_by(phone_number: message_sender.sub("+1",""))
 
-      #Does user exist in DB?
       if !User.pluck(:phone_number).include?(message_sender.sub("+1",""))
         reply_body = UNKNOWN_USER_MESSAGE
-      #is the user trying to send in a confirmation code?
       elsif message_body.match(/\A\d{4}\z/) && user.awaiting_confirmation?
         if user.confirmation_code == message_body && user.confirmation_code_time + 1.hour > Time.now
           user.confirm_phone_number
@@ -36,14 +34,11 @@ class Message < ActiveRecord::Base
           user.generate_confirmation_code
           reply_body = INCORRECT_CONFIRMATION_CODE_MESSAGE
         end
-      #A user whose phone number has not been confirmed cannot access the other functionality below
       elsif user.awaiting_confirmation?
         reply_body = UNCONFIRMED_PHONE_NUMBER_MESSAGE
-      # is the user trying to declare a nag done?
       elsif message_body.downcase == "done"
         user.last_ping.declare_done
         reply_body = NAG_DONE_MESSAGE
-      #is the user trying to stop all nags?
       elsif message_body.downcase == "stop nags"
         if user.active?
           user.stop_all_nags
@@ -51,7 +46,6 @@ class Message < ActiveRecord::Base
         else
           reply_body = ALREADY_STOPPED_MESSAGE
         end
-      #is the user trying to restart nags?
       elsif message_body.downcase == "restart nags"
         if user.stopped?
           user.restart_all_nags
@@ -59,14 +53,11 @@ class Message < ActiveRecord::Base
         else
           reply_body = ALREADY_ACTIVE_MESSAGE
         end
-      #is the user trying to access the command list?
       elsif message_body.downcase == "command list"
         reply_body = COMMAND_LIST
-      #is the user trying to add a new nag?
       elsif message_body.downcase.start_with?("remind me to")
         Message.create_nag(user, message_body)
         reply_body = CREATE_NAG_CONFIRMATION
-      #if none of the above, then the user must have sent a command not recognized by the app.
       else
         reply_body = UNKNOWN_COMMAND_MESSAGE
       end
