@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'restart nags' do
-    let(:user) {FactoryGirl.create(:user)}
+    let(:user) {FactoryGirl.create(:user, status: "active")}
     let(:nag) {user.nags.create(contents: "nag")}
 
     before :each do
@@ -15,11 +15,13 @@ feature 'restart nags' do
 
     expect(page).to have_content("stopped")
     expect(page).to_not have_content("active")
+    expect(page).to_not have_content("Stop All Nags")
     
     click_on "Restart All Nags"
 
     expect(page).to have_content("active")
     expect(page).to_not have_content("stopped")
+    expect(page).to have_content("Stop All Nags")
   end
 
   scenario 'if user\'s status is active, there is no restart button' do

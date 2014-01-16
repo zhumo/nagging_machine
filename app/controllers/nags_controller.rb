@@ -24,6 +24,16 @@ class NagsController < ApplicationController
     @nag = Nag.find(params[:id])
   end
 
+  def update
+    @nag = Nag.find(params[:id])
+
+    if @nag.update(nag_params)
+      redirect_to mynags_path
+    else
+      render :edit
+    end
+  end
+
   private
 
   def nag_params

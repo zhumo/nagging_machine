@@ -144,5 +144,4 @@ describe User do
       expect(user.awaiting_confirmation?).to be_false
     end
   end
-
 end

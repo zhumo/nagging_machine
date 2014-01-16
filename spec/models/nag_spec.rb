@@ -12,7 +12,7 @@ describe Nag do
   end
 
   describe 'display_status method' do
-    let(:user) {FactoryGirl.create(:user)}
+    let(:user) {FactoryGirl.create(:user, status: "active")}
     let(:nag) {user.nags.create(contents: "I'm a nag")}
 
     it "should have an active status when the user is active" do
