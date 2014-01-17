@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   end
 
   def last_ping
-    nags.order(:last_ping_time).last
+    nags.order(:last_ping_time).first
   end
   
   def generate_confirmation_code

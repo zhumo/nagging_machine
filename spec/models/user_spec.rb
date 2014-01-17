@@ -104,7 +104,7 @@ describe User do
 
   describe "last_ping" do
     it "should return the last ping" do
-      user = FactoryGirl.create(:user, status: "active")
+      user = FactoryGirl.create(:user)
       2.times do 
         FactoryGirl.create(:nag, user_id: user.id)
       end

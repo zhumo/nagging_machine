@@ -2,10 +2,10 @@ NaggingMachine::Application.routes.draw do
   devise_for :users, controllers: {registrations: "users/registrations"}
   devise_scope :user do
     get 'password_confirmation' => 'users/registrations'
+#    get 'change_phone_number' => 'users/registrations'
   end
   root 'home#index'
   get 'mynags', to: 'nags#index'
-#  get 'password_confirmation', to: "users/registrations#password_confirmation"
   put 'nags/:id/done', to: 'commands#done', as: :done_nag
   put 'stop_nags', to: 'commands#stop'
   put 'restart_nags', to: 'commands#restart'

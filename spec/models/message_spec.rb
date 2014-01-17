@@ -58,10 +58,10 @@ describe Message do
 
     it "should send the nag done message and declare the user's last nag to be done if the user sends 'done'" do
       2.times do |n|
-        @user.nags.create(contents: "nag_#{n}", last_ping_time: Time.now - (n + 1).hour)
+        FactoryGirl.create(:nag, user: @user)
       end
 
-      nag = @user.nags.create(contents: "last nag", last_ping_time: Time.now)
+      nag = FactoryGirl.create(:nag, user: @user)
 
       expect(Message).to receive(:send_message).with(@user.full_phone_number, Message::NAG_DONE_MESSAGE)
 
@@ -141,4 +141,5 @@ describe Message do
       Message.send_welcome_message(@user)
     end
   end
+
 end

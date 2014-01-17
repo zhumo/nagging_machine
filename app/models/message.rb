@@ -68,7 +68,7 @@ class Message < ActiveRecord::Base
     def send_welcome_message(user)
       Message.send_message(user.full_phone_number, Message::WELCOME_MESSAGE)
     end
-    
+
     protected
 
     def send_message(recipient_phone,body)

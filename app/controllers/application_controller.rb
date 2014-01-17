@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
     mynags_path
   end
 
+#  def after_update_path_for(user)
+#    mynags_path
+#  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name]
     devise_parameter_sanitizer.for(:account_update) << [:first_name, :last_name]

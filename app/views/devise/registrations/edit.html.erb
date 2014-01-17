@@ -5,7 +5,6 @@
 
   <%= f.input :first_name, label: "First Name", :required => true, :autofocus => true %>
   <%= f.input :last_name, label: "Last Name", :required => true %>
-  <p>Phone Number: <%= current_user.phone_number %> <%= link_to "change", "#" %></p> 
   <%= f.input :password, label: "New Password", :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
   <%= f.input :password_confirmation, label: "Password Confirmation", :required => false %>
   <%= f.input :current_password, label: "Current Password", :hint => "we need your current password to confirm your changes", :required => true %>
