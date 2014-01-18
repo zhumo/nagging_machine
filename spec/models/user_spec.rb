@@ -68,6 +68,8 @@ describe User do
   describe "stop_all_nags method" do
     it "should change an active user's status to 'stopped' and reset the job queue" do
       user = FactoryGirl.create(:user, status: "active")
+      2.times {FactoryGirl.create(:nag, user: user)}
+      nag = FactoryGirl.create(:nag, user: user)
       jobs_count = Sidekiq::ScheduledSet.new.clear
 
       user.stop_all_nags

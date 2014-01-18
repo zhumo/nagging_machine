@@ -35,12 +35,16 @@ class User < ActiveRecord::Base
 
   def stop_all_nags
     update_attribute(:status, "stopped") if status == "active"
-    Nag.populate_sidekiq
+    if Nag.any?
+      Nag.populate_sidekiq
+    end
   end
 
   def restart_all_nags
     update_attribute(:status, "active") if status == "stopped"
-    Nag.populate_sidekiq
+    if Nag.any?
+      Nag.populate_sidekiq
+    end
   end
 
   def confirm_phone_number

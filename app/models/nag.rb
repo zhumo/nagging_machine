@@ -14,17 +14,17 @@ class Nag < ActiveRecord::Base
   end
 
   def generate_next_ping_time
-    update_attribute(:next_ping_time, Time.now + rand(5).hours + rand(61).minutes)
+    update_attribute(:next_ping_time, next_ping_time + rand(4).hours + rand(60).minutes)
   end
 
   def self.populate_sidekiq
     @nag = self.first_nag_to_be_pinged
 
     if @nag.next_ping_time.hour >= 4 && @nag.next_ping_time.hour < 13
-      Sidekiq::ScheduledSet.new.clear
       @nag.generate_next_ping_time
       Nag.populate_sidekiq
     else
+      Sidekiq::ScheduledSet.new.clear
       NagWorker.perform_at(@nag.next_ping_time, @nag.id)
     end
   end
