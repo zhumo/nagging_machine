@@ -66,11 +66,13 @@ describe User do
   end
 
   describe "stop_all_nags method" do
-    it "should change an active user's status to 'stopped'" do
+    it "should change an active user's status to 'stopped' and reset the job queue" do
       user = FactoryGirl.create(:user, status: "active")
+      jobs_count = Sidekiq::ScheduledSet.new.clear
 
       user.stop_all_nags
 
+      expect(jobs_count).to eq(Sidekiq::ScheduledSet.new.clear)
       expect(user.status).to eq("stopped")
     end
 
@@ -83,10 +85,13 @@ describe User do
   end
 
   describe "restart_all_nags method" do
-    it "should change a stopped user's status to 'active'" do
+    it "should change a stopped user's status to 'active' and reset the job queue" do
       user = FactoryGirl.create(:user, status: "active")
+      jobs_count = Sidekiq::ScheduledSet.new.clear
       
       user.restart_all_nags
+
+      expect(jobs_count).to eq(Sidekiq::ScheduledSet.new.clear)
       expect(user.status).to eq("active")
     end
 

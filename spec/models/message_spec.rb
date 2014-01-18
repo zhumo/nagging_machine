@@ -142,4 +142,16 @@ describe Message do
     end
   end
 
+  describe "#send_nag" do
+    it "should send a message with the nag's owner's phone number and the nag's contents" do
+      user = FactoryGirl.create(:user)
+      nag = FactoryGirl.create(:nag, user: user)
+      nag_message = "Remember to #{nag.contents}."
+
+      expect(Message).to receive(:send_message).with(nag.user.full_phone_number, nag_message)
+
+      Message.send_nag(nag)
+    end
+  end
+
 end

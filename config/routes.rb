@@ -1,4 +1,7 @@
+require 'sidekiq/web'
+
 NaggingMachine::Application.routes.draw do
+  mount Sidekiq::Web, at: '/sidekiq'
   devise_for :users, controllers: {registrations: "users/registrations"}
   devise_scope :user do
     get 'password_confirmation' => 'users/registrations'

@@ -16,7 +16,6 @@ class NagsController < ApplicationController
 
     if @nag.save
       @nag.generate_next_ping_time
-      Sidekiq::Queue.new.clear
       Nag.populate_sidekiq
       redirect_to mynags_path
     else

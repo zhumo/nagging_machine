@@ -69,6 +69,13 @@ class Message < ActiveRecord::Base
       Message.send_message(user.full_phone_number, Message::WELCOME_MESSAGE)
     end
 
+    def send_nag(nag)
+      nag_message = "Remember to #{nag.contents}."
+      Message.send_message(nag.user.full_phone_number, nag_message)
+      Sidekiq::Queue.new.clear
+      Nag.populate_sidekiq
+    end
+
     protected
 
     def send_message(recipient_phone,body)

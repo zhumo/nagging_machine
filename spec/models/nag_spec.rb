@@ -38,16 +38,34 @@ describe Nag do
   end
 
   describe ".populate_sidekiq" do
-    it "should send a ping time to NagWorker with the nag id" do
-      user_1 = FactoryGirl.create(:user)
+    before(:each) do
+      @user_1 = FactoryGirl.create(:user)
 
       2.times do |n|
-        FactoryGirl.create(:nag, user_id: user_1.id)
+        FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.local(2020,1,1,10))
       end
-      
-      first_nag = FactoryGirl.create(:nag, user_id: user_1.id)
+    end
+
+    it "should send a ping time to NagWorker with the nag id if the nag ping time is before 4AM and after 1PM UTC" do
+      first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.local(2020,1,1,8,1))
 
       expect(NagWorker).to receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
+      
+      Nag.populate_sidekiq
+    end
+
+    it "should not send a ping time to NagWorker with the nag id if the nag ping time is before 1PM UTC" do
+      first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.local(2020,1,1,7,59))
+
+      expect(NagWorker).to_not receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
+      
+      Nag.populate_sidekiq
+    end
+
+    it "should not send a ping time to NagWorker with the nag id if the nag ping time is after 4AM UTC" do
+      first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.local(2019,12,31,23,1))
+
+      expect(NagWorker).to_not receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
       
       Nag.populate_sidekiq
     end
@@ -63,7 +81,7 @@ describe Nag do
         FactoryGirl.create(:nag, user_id: user_2.id)
       end
       
-      first_nag = FactoryGirl.create(:nag, user_id: user_1.id)
+      first_nag = FactoryGirl.create(:nag, user_id: user_1.id, next_ping_time: Time.now)
 
       expect(Nag.first_nag_to_be_pinged).to eq(first_nag)
     end
