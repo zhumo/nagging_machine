@@ -7,6 +7,7 @@ class Nag < ActiveRecord::Base
 
   def declare_done
     update_attributes(status: "done")
+    Nag.populate_sidekiq
   end
 
   def display_status
