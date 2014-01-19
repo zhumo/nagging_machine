@@ -30,7 +30,7 @@ class Nag < ActiveRecord::Base
   end
 
   def self.first_nag_to_be_pinged
-    self.where(status: "active").order(:next_ping_time).first
+    Nag.where(status: "active").select{|nag| nag.user.status == "active" }.sort_by{|nag| nag.next_ping_time }.first
   end
   
 end

@@ -9,6 +9,5 @@ class NagWorker
   def perform(nag_id)
     @nag = Nag.find(nag_id)
     Message.send_nag(@nag)
-    @nag.generate_new_ping_time
   end
 end

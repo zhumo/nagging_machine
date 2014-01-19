@@ -72,6 +72,9 @@ class Message < ActiveRecord::Base
     def send_nag(nag)
       nag_message = "Remember to #{nag.contents}."
       Message.send_message(nag.user.full_phone_number, nag_message)
+      nag.update_attribute(:last_ping_time, Time.now)
+      nag.generate_next_ping_time
+      nag.update_attribute(:ping_count, ping_count += 1)
       Sidekiq::Queue.new.clear
       Nag.populate_sidekiq
     end

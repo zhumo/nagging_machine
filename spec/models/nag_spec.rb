@@ -71,17 +71,19 @@ describe Nag do
     end
   end
 
-  describe ".first_to_be_pinged" do
-    it "should return the earliest-timed nag" do
+  describe ".first_nag_to_be_pinged" do
+    it "should return the earliest-timed nag of all active users" do
       user_1 = FactoryGirl.create(:user)
       user_2 = FactoryGirl.create(:user)
+      user_stopped = FactoryGirl.create(:user, status: "stopped")
 
       2.times do |n|
         FactoryGirl.create(:nag, user_id: user_1.id)
         FactoryGirl.create(:nag, user_id: user_2.id)
       end
+      stopped_nag = FactoryGirl.create(:nag, user: user_stopped, next_ping_time: Time.now) 
       
-      first_nag = FactoryGirl.create(:nag, user_id: user_1.id, next_ping_time: Time.now)
+      first_nag = FactoryGirl.create(:nag, user_id: user_1.id, next_ping_time: Time.now + 1.second)
 
       expect(Nag.first_nag_to_be_pinged).to eq(first_nag)
     end

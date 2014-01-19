@@ -35,7 +35,8 @@ class User < ActiveRecord::Base
 
   def stop_all_nags
     update_attribute(:status, "stopped") if status == "active"
-    if Nag.any?
+    Sidekiq::ScheduledSet.new.clear
+    if Nag.first_nag_to_be_pinged.present?
       Nag.populate_sidekiq
     end
   end

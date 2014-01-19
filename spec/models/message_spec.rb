@@ -143,7 +143,7 @@ describe Message do
   end
 
   describe "#send_nag" do
-    it "should send a message with the nag's owner's phone number and the nag's contents" do
+    it "should send a message with the nag's owner's phone number and the nag's contents and update the last_ping_time attribute" do
       user = FactoryGirl.create(:user)
       nag = FactoryGirl.create(:nag, user: user)
       nag_message = "Remember to #{nag.contents}."
@@ -151,6 +151,7 @@ describe Message do
       expect(Message).to receive(:send_message).with(nag.user.full_phone_number, nag_message)
 
       Message.send_nag(nag)
+      expect(nag.last_ping_time.inspect).to eq(Time.now.in_time_zone('UTC').inspect)
     end
   end
 

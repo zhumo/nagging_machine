@@ -13,6 +13,7 @@ class NagsController < ApplicationController
 
   def create
     @nag = current_user.nags.build(nag_params)
+    @nag.update_attribute(:next_ping_time, Time.now)
 
     if @nag.save
       @nag.generate_next_ping_time
