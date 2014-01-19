@@ -21,12 +21,14 @@ class Nag < ActiveRecord::Base
   def self.populate_sidekiq
     @nag = self.first_nag_to_be_pinged
 
-    if @nag.next_ping_time.hour >= 4 && @nag.next_ping_time.hour < 13
-      @nag.generate_next_ping_time
-      Nag.populate_sidekiq
-    else
-      Sidekiq::ScheduledSet.new.clear
-      NagWorker.perform_at(@nag.next_ping_time, @nag.id)
+    if @nag
+      if @nag.next_ping_time.hour >= 4 && @nag.next_ping_time.hour < 13
+        @nag.generate_next_ping_time
+        Nag.populate_sidekiq
+      else
+        Sidekiq::ScheduledSet.new.clear
+        NagWorker.perform_at(@nag.next_ping_time, @nag.id)
+      end
     end
   end
 

@@ -8,7 +8,7 @@ feature "user creates a new nag" do
   end
 
   scenario "enters valid information" do
-    fill_in "Contents", with: "awesome"
+    fill_in "Remind me to...", with: "awesome"
 
     click_on "Submit"
     
@@ -16,7 +16,7 @@ feature "user creates a new nag" do
   end
 
   scenario "enters invalid information" do
-    fill_in "Contents", with: ""
+    fill_in "Remind me to...", with: ""
 
     click_on "Submit"
 
