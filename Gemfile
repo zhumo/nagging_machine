@@ -5,6 +5,7 @@ gem 'twilio-ruby'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
+gem 'foundation-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
