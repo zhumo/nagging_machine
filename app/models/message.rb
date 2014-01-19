@@ -94,7 +94,8 @@ class Message < ActiveRecord::Base
     def create_nag(user, nag_contents)
       formatted_contents = nag_contents.downcase.sub("remind me to ","").capitalize
 
-      Nag.create(contents: formatted_contents, user_id: user.id)
+      nag = Nag.create(contents: formatted_contents, user_id: user.id, next_ping_time: Time.now)
+      nag.generate_next_ping_time
     end
   end
 end
