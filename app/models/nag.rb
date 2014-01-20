@@ -15,7 +15,7 @@ class Nag < ActiveRecord::Base
   end
 
   def generate_next_ping_time
-    update_attribute(:next_ping_time, next_ping_time + rand(4).hours + rand(60).minutes)
+    update_attribute(:next_ping_time, next_ping_time + rand(4..6).hours + rand(60).minutes)
   end
 
   def self.populate_sidekiq

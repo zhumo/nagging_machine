@@ -1,11 +1,13 @@
-%h1 Welcome
-
-%h3 Do you have tasks you keep putting off?
-%p Tell The Nagging Machine and it will send you texts during the day to remind you.
-%p You can even interact with it via text.
+.row
+  .10.columns.centered
+    %h1.text-center Welcome to the Nagging Machine
+    .panel
+      %h3.text-center Do you have tasks you keep putting off?
+      %p Tell The Nagging Machine and it will send you texts during the day to remind you. You can even interact with it via text commands. No browser necessary.
+  %img{src:"app/assets/images/clock.jpg"}
 
 -if user_signed_in?
-  %p 
+  %p
     Signed in as 
     =link_to current_user.full_name, mynags_path
     | 
