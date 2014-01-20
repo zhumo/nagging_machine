@@ -7,5 +7,25 @@
     = javascript_include_tag "vendor/modernizr"
     = csrf_meta_tags
   %body
+    .large-10.columns.centered#nav
+      -if user_signed_in?
+        %p.right
+          Signed in as 
+          =link_to current_user.full_name, mynags_path
+          | 
+          =link_to "Sign Out", destroy_user_session_path, method: :delete
+      -else
+        %p.right
+          =link_to "Sign Up", new_user_registration_path if !user_signed_in?
+          | 
+          =link_to "Sign In", new_user_session_path if !user_signed_in?
     = yield
+    .large-10.columns.centered#footer
+      .panel
+        %p
+          Hand-crafted by
+          =link_to "@MoZhuuuuu", "https://twitter.com/mozhuuuuu"
+          %br
+          a world class beginner
+          =link_to "@launchacademy_", "https://twitter.com/launchacademy_"
     = javascript_include_tag "application"
