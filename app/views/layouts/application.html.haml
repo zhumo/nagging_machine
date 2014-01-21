@@ -6,9 +6,9 @@
     = stylesheet_link_tag    "application"
     = javascript_include_tag "vendor/modernizr"
     = csrf_meta_tags
-  %body
+  %body{class: body_class}
     .row
-      .show-for-small-only.small-12.columns
+      .show-for-small-only.small-12.columns.mobile-nav
         %ul.side-nav
           %li
             =link_to "Home", root_path
@@ -30,7 +30,7 @@
               =link_to "Sign Up", new_user_registration_path
       .small-12.medium-10.medium-left.columns
         = yield
-      .hide-for-small-only.medium-2.medium-right.columns
+      .hide-for-small-only.medium-2.medium-right.columns.medium-large-nav
         %ul.side-nav
           %li
             =link_to "Home", root_path

@@ -1,0 +1,21 @@
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %title The Nagging Machine 
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "vendor/modernizr"
+    = csrf_meta_tags
+  %body{class: body_class}
+    .row
+      = yield
+    %hr
+    %footer#footer.small-10.small-centered.columns
+      .row
+        %p.left
+          Hand-crafted by
+          =link_to "@MoZhuuuuu", "https://twitter.com/mozhuuuuu"
+          %br
+          a world class beginner
+          =link_to "@launchacademy_", "https://twitter.com/launchacademy_"
+    = javascript_include_tag "application"

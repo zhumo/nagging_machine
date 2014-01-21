@@ -13,3 +13,11 @@
 
  *= require_tree .
  */
+
+.home-index {
+  .mobile-nav, .medium-large-nav {
+    .side-nav {
+      display: "none";
+      }
+  }
+}
