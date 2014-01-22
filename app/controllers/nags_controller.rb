@@ -4,7 +4,7 @@ class NagsController < ApplicationController
 
   def index
     @user = User.find(current_user.id)
-    @nags = @user.nags.where(status: "active")
+    @nags = @user.nags.where(status: "active").order(created_at: :desc)
   end
 
   def new
