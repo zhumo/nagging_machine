@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
   def restart_all_nags
     update_attribute(:status, "active") if status == "stopped"
     if Nag.any?
+      nags.each { |nag| nag.generate_next_ping_time }
       Nag.populate_sidekiq
     end
   end
