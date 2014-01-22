@@ -6,6 +6,7 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'foundation-rails'
+gem 'unicorn'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
