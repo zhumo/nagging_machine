@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
-  def password_confirmation_redirect
+  def phone_confirmation_redirect
     if current_user.awaiting_confirmation?
-      redirect_to password_confirmation_path
+      redirect_to phone_confirmation_path
     end
   end
 

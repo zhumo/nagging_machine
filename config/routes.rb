@@ -4,7 +4,7 @@ NaggingMachine::Application.routes.draw do
   mount Sidekiq::Web, at: '/sidekiq'
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions"}
   devise_scope :user do
-    get 'password_confirmation' => 'users/registrations'
+    get 'phone_confirmation' => 'users/registrations'
 #    get 'change_phone_number' => 'users/registrations'
   end
   root 'home#index'

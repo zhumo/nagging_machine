@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy, :change_phone_number]
   prepend_before_filter :require_no_authentication, :only => [:new, :create, :cancel]
-  layout "home_page", only: [:new]
+  layout "home_page", only: [:new, :phone_confirmation]
 
   def new
     build_resource({})
@@ -52,7 +52,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   end
 
-  def password_confirmation
+  def phone_confirmation
     redirect_to mynags_path if !current_user.awaiting_confirmation?
   end
 

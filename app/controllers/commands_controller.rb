@@ -21,7 +21,6 @@ class CommandsController < ApplicationController
 
   def hook
     Message.route_incoming(params)
-    render nothing: true
   end
 
 end

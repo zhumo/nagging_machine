@@ -1,0 +1,17 @@
+.small-10.small-centered.medium-7.medium-centered.columns
+  %h1 Phone Confirmation
+
+  %p 
+    Please confirm your phone number by sending the following code from your phone number (
+    =current_user.formatted_phone_number
+    ) to
+    =ENV['TWILIO_PHONE_NUMBER'].sub("+1","").insert(3,".").insert(7,".")
+
+  %h1= current_user.confirmation_code
+
+  %p This code is valid for one hour.
+  %p Refresh the page once your phone number has been confirmed to be redirected to the main page
+
+  %p Made a mistake? Delete your account and start over.
+
+  =link_to "Delete Account", user_registration_path, data: {confirm: "Are you sure?"}, method: :delete, class: "button alert"

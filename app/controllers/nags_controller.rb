@@ -1,6 +1,6 @@
 class NagsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :password_confirmation_redirect
+  before_filter :phone_confirmation_redirect
 
   def index
     @user = User.find(current_user.id)
