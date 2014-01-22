@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
     "+1#{phone_number}"
   end
 
+  def formatted_phone_number
+    "#{phone_number.insert(3,'.').insert(7,'.')}"
+  end
+
   def active?
     status == "active"
   end

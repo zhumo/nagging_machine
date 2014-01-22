@@ -153,4 +153,11 @@ describe User do
       expect(user.full_phone_number).to eq("+1#{user.phone_number}")
     end
   end
+
+  describe "#formatted_phone_number" do
+    it "shuld return the formatted phone number" do
+      user = FactoryGirl.create(:user, phone_number: "1234567890")
+      expect(user.formatted_phone_number).to eq("123.456.7890")
+    end
+  end
 end
