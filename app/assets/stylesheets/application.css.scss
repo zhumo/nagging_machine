@@ -46,3 +46,9 @@ body {
     border-left: hidden;
   }
 }
+
+.form-actions{
+  .button {
+    border-radius: 0 !important;
+  }
+}

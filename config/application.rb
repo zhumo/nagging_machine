@@ -26,3 +26,5 @@ module NaggingMachine
     # config.i18n.default_locale = :de
   end
 end
+
+Dir[Rails.root.join("lib/core_ext/simple_form/**/*.rb")].each { |f| require f }
