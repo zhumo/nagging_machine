@@ -4,13 +4,13 @@ class CommandsController < ApplicationController
   def stop
     @user = current_user
     @user.stop_all_nags
-    redirect_to mynags_path
+    redirect_to :back
   end
 
   def restart
     @user = current_user
     @user.restart_all_nags
-    redirect_to mynags_path
+    redirect_to :back
   end
   
   def done

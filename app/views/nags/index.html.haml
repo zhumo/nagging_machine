@@ -1,21 +1,21 @@
-%h1 My Nags
+%h1 
+  My Nags - 
+  =current_user.full_name
 
-%table
+%table.nags-table
   %thead
     %tr
       %th
         Remind me to...
       %th
-        Status
+      %th
   %tbody
     -@nags.each do |nag|
-      %tr
-        %td
-          =nag.contents
-        %td
-          =nag.display_status
-        %td
+      %tr.nag
+        %td.nag-contents
+          =nag.contents.capitalize
+        %td.nag-done
           =link_to "Done", done_nag_path(nag), method: :put
-        %td
+        %td.nag-edit
           =link_to "Edit", edit_nag_path(nag)
 

@@ -8,12 +8,12 @@
     = csrf_meta_tags
 
   %body{class: body_class}
-    .row
+    .row.main-content
       .small-10.small-centered.columns
         .row
           .small-12.medium-8.medium-left.columns
             = yield
-          .small-12.medium-3.medium-right.columns.navigation
+          .small-12.medium-4.medium-right.columns.navigation
             %ul.side-nav
               -if user_signed_in?
                 %li

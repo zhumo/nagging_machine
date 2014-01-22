@@ -1,4 +1,4 @@
-<h2>Edit Account</h2>
+<h1>Edit Account</h1>
 
 <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= f.error_notification %>
@@ -10,5 +10,3 @@
   <%= f.input :current_password, label: "Current Password", :hint => "we need your current password to confirm your changes", :required => true %>
   <%= f.button :submit, "Submit" %>
 <% end %>
-
-<%= link_to "Back", :back %>

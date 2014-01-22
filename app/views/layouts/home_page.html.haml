@@ -14,7 +14,7 @@
           =link_to "#{current_user.full_name}", mynags_path
           |
           =link_to "Sign Out", destroy_user_session_path, method: :delete
-    .row
+    .row.main-content
       = yield
     =render 'layouts/footer'
     = javascript_include_tag "application"
