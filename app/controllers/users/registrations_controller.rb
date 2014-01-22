@@ -1,6 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy, :change_phone_number]
   prepend_before_filter :require_no_authentication, :only => [:new, :create, :cancel]
+  layout "home_page", only: [:new]
 
   def new
     build_resource({})

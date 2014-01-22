@@ -8,14 +8,13 @@
     = csrf_meta_tags
   %body{class: body_class}
     .row
+      %p.right
+        -if user_signed_in?
+          Signed in as 
+          =link_to "#{current_user.full_name}", mynags_path
+          |
+          =link_to "Sign Out", destroy_user_session_path, method: :delete
+    .row
       = yield
-    %hr
-    %footer#footer.small-10.small-centered.columns
-      .row
-        %p.left
-          Hand-crafted by
-          =link_to "@MoZhuuuuu", "https://twitter.com/mozhuuuuu"
-          %br
-          a world class beginner
-          =link_to "@launchacademy_", "https://twitter.com/launchacademy_"
+    =render 'layouts/footer'
     = javascript_include_tag "application"

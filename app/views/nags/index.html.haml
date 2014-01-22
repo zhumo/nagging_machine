@@ -1,31 +1,21 @@
-.medium-7.medium-centered.small-10.small-centered.columns
-  %h1 My Nags
-  %p=link_to "New Nag", new_nag_path
-  -if @user.active?
-    %p=link_to "Stop All Nags", stop_nags_path, method: :put
-  -else
-    %p=link_to "Restart All Nags", restart_nags_path, method: :put
+%h1 My Nags
 
-  %p= link_to "Edit Account", edit_user_registration_path
-  %p= link_to "Delete My Account", user_registration_path, data: {confirm: "Are you sure?"}, method: :delete
-
-
-  %table
-    %thead
+%table
+  %thead
+    %tr
+      %th
+        Remind me to...
+      %th
+        Status
+  %tbody
+    -@nags.each do |nag|
       %tr
-        %th
-          Remind me to...
-        %th
-          Status
-    %tbody
-      -@nags.each do |nag|
-        %tr
-          %td
-            =nag.contents
-          %td
-            =nag.display_status
-          %td
-            =link_to "Done", done_nag_path(nag), method: :put
-          %td
-            =link_to "Edit", edit_nag_path(nag)
+        %td
+          =nag.contents
+        %td
+          =nag.display_status
+        %td
+          =link_to "Done", done_nag_path(nag), method: :put
+        %td
+          =link_to "Edit", edit_nag_path(nag)
 

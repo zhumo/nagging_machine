@@ -9,15 +9,19 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require foundation_and_overrides
+ *= require foundation
 
  *= require_tree .
  */
 
-.home-index {
-  .mobile-nav, .medium-large-nav {
-    .side-nav {
-      display: "none";
-      }
-  }
+@import 'foundation_and_overrides';
+
+.navigation {
+  border-left: solid 1px #E8E8E8;
+  border-height: 80%;
+  border-left-color: "red";
+}
+
+body {
+  padding-top: 25px !important;
 }
