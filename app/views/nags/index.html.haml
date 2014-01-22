@@ -1,21 +1,25 @@
-%h1 
-  My Nags - 
-  =current_user.full_name
+.row
+  %h1.small-12.columns My Nags
+.row
+  %h4.small-12.columns="#{current_user.full_name} - #{current_user.formatted_phone_number}"
 
-%table.nags-table
-  %thead
-    %tr
-      %th
-        Remind me to...
-      %th
-      %th
-  %tbody
-    -@nags.each do |nag|
-      %tr.nag
-        %td.nag-contents
-          =nag.contents.capitalize
-        %td.nag-done
-          =link_to "Done", done_nag_path(nag), method: :put
-        %td.nag-edit
-          =link_to "Edit", edit_nag_path(nag)
+.row
+  %table.nags-table.small-11.columns
+    .row
+      %thead
+        %tr
+          %th.small-12.columns
+            Remind me to...
+          %th
+          %th
+    .row
+      %tbody
+        -@nags.each do |nag|
+          %tr
+            %td.nag-contents.small-12.columns
+              =nag.contents.capitalize
+            %td.nag-done
+              =link_to "Done", done_nag_path(nag), method: :put
+            %td.nag-edit
+              =link_to "Edit", edit_nag_path(nag)
 
