@@ -7,13 +7,13 @@ feature 'user signs out' do
     visit root_path
     click_on "Sign Out"
 
-    expect(page).to have_content("Welcome")
+    expect(page).to have_content("The Nagging Machine")
   end
 
   scenario 'user signs out from mynags page' do
     sign_in_as(user)
     click_on "Sign Out"
 
-    expect(page).to have_content("Welcome")
+    expect(page).to have_content("The Nagging Machine")
   end
 end

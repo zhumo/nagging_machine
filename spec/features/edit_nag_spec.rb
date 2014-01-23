@@ -10,7 +10,7 @@ feature 'user edits nag contents' do
 
   scenario 'user inputs valid information' do
     sign_in_as(user)
-    expect(page).to have_content("something")
+    expect(page).to have_content("Something")
 
     click_on "Edit"
 
@@ -18,7 +18,7 @@ feature 'user edits nag contents' do
     
     click_on "Submit"
 
-    expect(page).to have_content("something else")
+    expect(page).to have_content("Something else")
   end
 
   scenario 'user inputs invalid information' do

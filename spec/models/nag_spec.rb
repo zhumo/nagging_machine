@@ -46,28 +46,32 @@ describe Nag do
       end
     end
 
-    it "should send a ping time to NagWorker with the nag id if the nag ping time is before 4AM and after 1PM UTC" do
-      first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.local(2020,1,1,8,1))
+    it "should send a ping time to NagWorker with the nag id if the nag ping time is before 10AM and after 11PM EST" do
+      first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.local(2013,1,1,18))
 
       expect(NagWorker).to receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
       
       Nag.populate_sidekiq
     end
 
-    it "should not send a ping time to NagWorker with the nag id if the nag ping time is before 1PM UTC" do
-      first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.local(2020,1,1,7,59))
+    it "should send a ping time to NagWorker that is within the acceptable times with the nag id if the nag ping time is before 10AM EST" do
+      first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.now - 1.day)
 
-      expect(NagWorker).to_not receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
+      expect(NagWorker).to receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
       
       Nag.populate_sidekiq
+
+      expect(first_nag.next_ping_time.hour).to_not be_between(4,15)
     end
 
-    it "should not send a ping time to NagWorker with the nag id if the nag ping time is after 4AM UTC" do
-      first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.local(2019,12,31,23,1))
+    it "should not send a ping time to NagWorker that is within the acceptable times with the nag id if the nag ping time is after 11PM EST" do
+      first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.now - 1.day)
 
-      expect(NagWorker).to_not receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
+      expect(NagWorker).to receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
       
       Nag.populate_sidekiq
+
+      expect(first_nag.next_ping_time.hour).to_not be_between(4,15)
     end
   end
 
@@ -91,14 +95,14 @@ describe Nag do
 
   describe "#generate_next_ping_time" do
     it "should return a randomly generated time in the future" do
-      @nag = FactoryGirl.create(:nag)
+      @nag = FactoryGirl.create(:nag, next_ping_time: Time.now - 2.day)
 
       old_time = @nag.next_ping_time
 
       @nag.generate_next_ping_time
       @nag.reload
 
-      @nag.next_ping_time.should > old_time
+      @nag.next_ping_time.should_not eq(old_time)
     end
   end
 

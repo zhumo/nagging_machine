@@ -5,11 +5,9 @@ feature 'user views the home page' do
   scenario 'user not signed in visits root path' do
     visit root_path
 
-    expect(page).to have_content("Welcome")
+    expect(page).to have_content("The Nagging Machine")
     expect(page).to have_content("Sign Up")
     expect(page).to have_content("Sign In")
-    expect(page).to_not have_content("Sign Out")
-    expect(page).to_not have_content("Signed in as #{user.full_name}")
   end
 
   scenario "user who is signed in visits root path" do
@@ -17,11 +15,9 @@ feature 'user views the home page' do
 
     visit root_path
 
-    expect(page).to have_content("Welcome")
-    expect(page).to have_content("Signed in as #{user.full_name}")
-    expect(page).to have_content("Sign Out")
-    expect(page).to_not have_content("Sign In")
-    expect(page).to_not have_content("Sign Up")
+    expect(page).to have_content("My Nags")
+    expect(page).to have_content(user.full_name)
+    expect(page).to have_content(user.formatted_phone_number)
   end
 
 

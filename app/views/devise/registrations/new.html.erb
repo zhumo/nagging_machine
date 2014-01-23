@@ -2,14 +2,24 @@
   <h2>Sign up</h2>
 
   <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-    <%= f.error_notification %>
+    <% if resource.errors.any? %> 
+      <div id="error_explanation">    
+        <p><%= pluralize(resource.errors.count, "error") %> prohibited your account from being created:</p>
+
+        <ul>                     
+        <% resource.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>    
+        <% end %>                
+        </ul>
+      </div>
+    <% end %>     
 
     <div class="form-inputs">
-      <%= f.input :first_name, label: "First Name", autofocus: true %>
-      <%= f.input :last_name, label: "Last Name" %>
-      <%= f.input :phone_number, label: "Phone Number (10-digit, no formatting, no '+1')" %>
-      <%= f.input :password, label: "Password" %>
-      <%= f.input :password_confirmation, label: "Password Confirmation" %>
+      <%= f.input :first_name, label: "First Name", autofocus: true, error: false %>
+      <%= f.input :last_name, label: "Last Name", error: false %>
+      <%= f.input :phone_number, label: "Phone Number (10-digit, no formatting, no '+1')", error: false %>
+      <%= f.input :password, label: "Password", error: false %>
+      <%= f.input :password_confirmation, label: "Password Confirmation", error: false %>
     </div>
 
     <div class="form-actions">

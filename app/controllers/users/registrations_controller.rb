@@ -41,8 +41,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
           :update_needs_confirmation : :updated
         set_flash_message :notice, flash_key
       end
-      resource.update_attributes(status: "awaiting confirmation", phone_number_temp: params[:user][:phone_number_temp])
-      resource.generate_confirmation_code
+#      resource.update_attributes(status: "awaiting confirmation", phone_number_temp: params[:user][:phone_number_temp])
+#      resource.generate_confirmation_code
       sign_in resource_name, resource, :bypass => true
       respond_with resource, :location => after_update_path_for(resource)
     else
