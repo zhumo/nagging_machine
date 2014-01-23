@@ -15,11 +15,11 @@
     <% end %>     
 
     <div class="form-inputs">
-      <%= f.input :first_name, label: "First Name", autofocus: true, error: false %>
-      <%= f.input :last_name, label: "Last Name", error: false %>
-      <%= f.input :phone_number, label: "Phone Number (10-digit, no formatting, no '+1')", error: false %>
-      <%= f.input :password, label: "Password", error: false %>
-      <%= f.input :password_confirmation, label: "Password Confirmation", error: false %>
+      <%= f.input :first_name, label: "First Name", autofocus: true, error: false, required: false %>
+      <%= f.input :last_name, label: "Last Name", error: false, required: false %>
+      <%= f.input :phone_number, label: "Phone Number (10-digit, no formatting, no '+1')", error: false, required: false %>
+      <%= f.input :password, label: "Password", error: false, required: false %>
+      <%= f.input :password_confirmation, label: "Password Confirmation", error: false, required: false %>
     </div>
 
     <div class="form-actions">

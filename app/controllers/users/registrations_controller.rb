@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, :only => [:edit, :update, :destroy, :change_phone_number]
   prepend_before_filter :require_no_authentication, :only => [:new, :create, :cancel]
-  layout "home_page", only: [:new, :phone_confirmation]
+  layout "home_page", only: [:new,:create, :phone_confirmation]
 
   def new
     build_resource({})
@@ -26,7 +26,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     else
       clean_up_passwords resource
-      respond_with resource
+      respond_with resource, :location => after_sign_up_path_for(resource)
     end
   end
 

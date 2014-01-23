@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
     mynags_path
   end
 
+  def after_sign_up_path_for(user)
+    mynags_path
+  end
+
   def after_sign_out_path_for(user)
     root_path
   end

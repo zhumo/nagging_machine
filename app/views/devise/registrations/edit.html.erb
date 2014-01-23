@@ -10,3 +10,7 @@
   <%= f.input :current_password, label: "Current Password", :hint => "we need your current password to confirm your changes", :required => true %>
   <%= f.button :submit, "Submit" %>
 <% end %>
+<hr>
+<h1>Delete Account</h1>
+<p>Your data will not be saved.</p>
+<%=link_to "Delete Account", user_registration_path, data: {confirm: "Are you sure?"}, method: :delete, class: "button alert"%>

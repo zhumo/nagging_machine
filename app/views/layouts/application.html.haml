@@ -29,8 +29,6 @@
                     =link_to "Restart Nags", restart_nags_path, method: :put, class: "button success"
                 %li
                   =link_to "Sign Out", destroy_user_session_path, method: :delete, class: "button secondary"
-                %li
-                  =link_to "Delete Account", user_registration_path, data: {confirm: "Are you sure?"}, method: :delete, class: "button alert"
               -else
                 %li
                   =link_to "Sign In", new_user_session_path, class: "button secondary" if !current_page?(new_user_session_path)
