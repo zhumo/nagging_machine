@@ -21,7 +21,7 @@ class CommandsController < ApplicationController
 
   def hook
     Message.route_incoming(params)
-    render inline: "</response>"
+    render text: ""
   end
 
 end
