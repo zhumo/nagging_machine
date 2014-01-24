@@ -35,15 +35,9 @@ body {
     td {
       border-bottom: 1px dashed #e8e8e8;
     }
-    .nag-contents {
+    .nag-done {
       border-right: 1px dotted #ff6699;
     }
-  }
-}
-
-@media only screen and (max-width: 40em) {
-  .navigation {
-    border-left: hidden;
   }
 }
 
@@ -52,3 +46,12 @@ body {
     border-radius: 0 !important;
   }
 }
+
+@media only screen and (max-width: 40em) {
+  .navigation {
+    border-left: hidden;
+    margin-top: 0;
+  }
+}
+
+

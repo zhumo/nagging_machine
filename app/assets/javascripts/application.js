@@ -19,7 +19,9 @@
 $(function(){ $(document).foundation(); });
 
 $(document).ready(function(){
+
   $(".nag-done").click(function(event) {
+
     $.ajax({
       type: "PUT",
       url: '/nags/' + this.children[0].value + '/done',
@@ -28,6 +30,16 @@ $(document).ready(function(){
         alert('success!!');
       }
     });
+
     $(this.parentElement).fadeOut();
   });
+
+  $(".nag-contents").click(function(event) {
+    //ADD EDIT NAG IN HERE
+  });
+
+//  debugger;
+
+// ADD CREATE NAG HERE
+//  $(".nag").last().append("<tr></tr>");
 });

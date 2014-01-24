@@ -1,27 +1,26 @@
 .row
-  %h1.small-12.columns My Nags
+  .small-11.small-centered.columns
+    %h1 My Nags
 .row
-  %h4.small-12.columns="#{current_user.full_name} - #{current_user.formatted_phone_number}"
+  .small-11.small-centered.columns
+    %h4="#{current_user.full_name} - #{current_user.formatted_phone_number}"
 
 .row
-  %table.nags-table.small-11.columns
-    .row
-      %thead
-        %tr
-          %th.small-12.columns
-            Remind me to:
-          %th
-          %th
-    .row
-      .small-12.columns
+  %table.nags-table.small-11.small-centered.columns
+    %thead
+      %tr
+        %th
+        %th.small-12.columns
+          Remind me to:
+    .small-12.columns
       %tbody
         -@nags.each do |nag|
           .row
             %tr{id: nag.id}
-              %td.nag-contents.small-12.columns
-                =nag.contents.capitalize
               %td.nag-done
                 =check_box_tag 'Done', nag.id
-              %td.nag-edit
+              %td.nag-contents.small-12.columns
+                =nag.contents.capitalize
+              -#%td.nag-edit
                 =link_to "Edit", edit_nag_path(nag)
 

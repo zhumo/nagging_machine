@@ -18,7 +18,7 @@ class CommandsController < ApplicationController
     @nag.declare_done
     respond_to do |format|
       format.html { redirect_to mynags_path }
-      format.json { render mynags_path }
+      format.json { render json: mynags_path }
     end
   end
 
