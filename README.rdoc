@@ -1,7 +1,7 @@
 == The Nagging Machine
 This is the Breakable Toy that I made during my last few weeks at Launch Academy. You can visit the live site at:
 
-the-nagging-machine.herokuapp.com
+{the-nagging-machine.herokuapp.com}[the-nagging-machine.herokuapp.com]
 
 == About
 Are there some tasks that never get off your to-do list? Tell The Nagging Machine and it will text you randomly during the day until you do it.
