@@ -17,3 +17,17 @@
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+
+$(document).ready(function(){
+  $(".nag-done").click(function(event) {
+    $.ajax({
+      type: "PUT",
+      url: '/nags/' + this.children[0].value + '/done',
+      dataType: 'json',
+      success: function(){
+        alert('success!!');
+      }
+    });
+    $(this.parentElement).fadeOut();
+  });
+});

@@ -16,7 +16,10 @@ class CommandsController < ApplicationController
   def done
     @nag = Nag.find(params[:id])
     @nag.declare_done
-    redirect_to mynags_path
+    respond_to do |format|
+      format.html { redirect_to mynags_path }
+      format.json { render mynags_path }
+    end
   end
 
   def hook

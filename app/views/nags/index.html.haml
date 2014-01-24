@@ -13,13 +13,15 @@
           %th
           %th
     .row
+      .small-12.columns
       %tbody
         -@nags.each do |nag|
-          %tr
-            %td.nag-contents.small-12.columns
-              =nag.contents.capitalize
-            %td.nag-done
-              =link_to "Done", done_nag_path(nag), method: :put
-            %td.nag-edit
-              =link_to "Edit", edit_nag_path(nag)
+          .row
+            %tr{id: nag.id}
+              %td.nag-contents.small-12.columns
+                =nag.contents.capitalize
+              %td.nag-done
+                =check_box_tag 'Done', nag.id
+              %td.nag-edit
+                =link_to "Edit", edit_nag_path(nag)
 
