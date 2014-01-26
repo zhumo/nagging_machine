@@ -20,7 +20,7 @@
               %td.nag-done
                 =check_box_tag 'Done', nag.id
               %td.nag-contents.small-12.columns
-                =nag.contents.capitalize
+                =nag.formatted_contents
               -#%td.nag-edit
                 =link_to "Edit", edit_nag_path(nag)
 

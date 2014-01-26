@@ -18,6 +18,10 @@ class Nag < ActiveRecord::Base
     update_attribute(:next_ping_time, next_ping_time + rand(4..6).hours + rand(60).minutes)
   end
 
+  def formatted_contents
+    contents[0].upcase + contents[1..-1]
+  end
+
   def self.populate_sidekiq
     @nag = self.first_nag_to_be_pinged
 

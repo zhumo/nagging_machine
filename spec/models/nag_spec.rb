@@ -112,4 +112,11 @@ describe Nag do
       expect(nag.next_ping_time).to be_present
     end
   end
+
+  describe "#formatted_contents" do
+    it "should return the contents but with the first letter capitalized" do
+      nag = FactoryGirl.create(:nag, contents: "say hi to Jake and Jane.")
+      expect(nag.formatted_contents).to eq("Say hi to Jake and Jane.")
+    end
+  end
 end
