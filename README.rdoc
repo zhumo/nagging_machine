@@ -1,28 +1,15 @@
-== README
+== The Nagging Machine
+This is the Breakable Toy that I made during my last few weeks at Launch Academy. You can visit the live site at:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+{the-nagging-machine.herokuapp.com}[the-nagging-machine.herokuapp.com]
 
-Things you may want to cover:
+== About
+Are there some tasks that never get off your to-do list? Tell The Nagging Machine and it will text you randomly during the day until you do it.
+You can even interact with the app exclusively via text. No browser necessary.
 
-* Ruby version
+== Motivation
+We use many tools to help us remember our tasks. However, those tools are all passive. This is my attempt at filling that gap by creating an active reminder tool.
+It's easy to ignore a piece of paper or an app, but we are all magnetically compelled to view our text messages when we get a text.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+== Tools
+This app was made with Twilio, Sidekiq, and Foundation, using test-driven development (RSpec and Capybara)
