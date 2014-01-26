@@ -10,3 +10,6 @@ You can even interact with the app exclusively via text. No browser necessary.
 == Motivation
 We use many tools to help us remember our tasks. However, those tools are all passive. This is my attempt at filling that gap by creating an active reminder tool.
 It's easy to ignore a piece of paper or an app, but we are all magnetically compelled to view our text messages when we get a text.
+
+== Tools
+This app was made with Twilio, Sidekiq, and Foundation, using test-driven development (RSpec and Capybara)
