@@ -41,10 +41,15 @@ body {
   }
 }
 
-.form-actions{
-  .button {
-    border-radius: 0 !important;
-  }
+//.form-actions{
+//  .button {
+//    border-radius: 0 !important;
+//    -webkit-border-radius: 0px;
+//  }
+//}
+
+input[type=submit] {
+  -webkit-border-radius: 0px;
 }
 
 @media only screen and (max-width: 40em) {
