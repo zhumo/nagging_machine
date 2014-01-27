@@ -7,20 +7,25 @@
 
 .row
   %table.nags-table.small-11.small-centered.columns
-    %thead
-      %tr
-        %th
-        %th.small-12.columns
-          Remind me to:
-    .small-12.columns
-      %tbody
-        -@nags.each do |nag|
+    %thead.row
+      %tr.small-12.columns
+        .row
+          %th
+          %th
+            Remind me to:
+    %tbody.row
+      -@nags.each do |nag|
+        %tr{id: nag.id, class: "small-12 columns"}
           .row
-            %tr{id: nag.id}
-              %td.nag-done
-                =check_box_tag 'Done', nag.id
-              %td.nag-contents.small-12.columns
-                =nag.formatted_contents
-              -#%td.nag-edit
-                =link_to "Edit", edit_nag_path(nag)
+            %td.nag-done
+              =check_box_tag 'Done', nag.id
+            %td.nag-contents
+              =nag.formatted_contents
+            -#%td.nag-edit
+              =link_to "Edit", edit_nag_path(nag)
+      -#if @nags.empty?
+        %tr{id: "no-nags"}
+          %td.nag-done
+          %td.nag-contents
+            Create a new nag
 
