@@ -1,5 +1,3 @@
 %h1 New Nag
 
-=simple_form_for @nag do |f|
-  =f.input :contents, label: "Remind me to...", autofocus: true
-  =f.button :submit, "Submit"
+=render 'nag_form'

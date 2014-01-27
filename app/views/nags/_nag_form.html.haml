@@ -1,0 +1,5 @@
+=simple_form_for @nag do |f|
+  .form-inputs
+    =f.input :contents, label: "Remind me to...", autofocus: true
+  .form-actions
+    =f.button :submit, "Submit", class: "small-12 small-centered medium-4 medium-centered columns button"
