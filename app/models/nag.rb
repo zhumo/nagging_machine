@@ -6,7 +6,7 @@ class Nag < ActiveRecord::Base
   belongs_to :user, inverse_of: :nags
 
   def declare_done
-    update_attributes(status: "done")
+    update_attribute(:status, "done")
     Nag.populate_sidekiq
   end
 

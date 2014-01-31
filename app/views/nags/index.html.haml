@@ -16,13 +16,12 @@
     %tbody.row
       -@nags.each do |nag|
         %tr{id: nag.id, class: "small-12 columns"}
-          .row
-            %td.nag-done
-              =check_box_tag 'Done', nag.id
-            %td.nag-contents
-              =nag.formatted_contents
-            -#%td.nag-edit
-              =link_to "Edit", edit_nag_path(nag)
+          %td.nag-done.small-1.columns
+            =check_box_tag 'Done', nag.id
+          %td.nag-contents.small-12.columns
+            =nag.formatted_contents
+          -#%td.nag-edit
+            =link_to "Edit", edit_nag_path(nag)
       -#if @nags.empty?
         %tr{id: "no-nags"}
           %td.nag-done
