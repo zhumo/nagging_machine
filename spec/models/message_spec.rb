@@ -61,7 +61,7 @@ describe Message do
         FactoryGirl.create(:nag, user: @user)
       end
 
-      nag = FactoryGirl.create(:nag, user: @user)
+      nag = FactoryGirl.create(:nag, user: @user, last_ping_time: Time.now + 1.hour)
 
       expect(Message).to receive(:send_message).with(@user.full_phone_number, Message::NAG_DONE_MESSAGE)
 

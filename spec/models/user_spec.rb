@@ -116,7 +116,7 @@ describe User do
         FactoryGirl.create(:nag, user_id: user.id)
       end
 
-      last_nag = FactoryGirl.create(:nag, user_id: user.id)
+      last_nag = FactoryGirl.create(:nag, user_id: user.id, last_ping_time: Time.now + 1.hour)
       
       user.last_ping.should eq(last_nag)
     end
