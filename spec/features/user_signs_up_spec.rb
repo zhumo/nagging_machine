@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 feature 'user signs up' do
+  before :each do
+      ENV.stub(:[]).with("TWILIO_PHONE_NUMBER").and_return("+10985674321")
+  end
+
   scenario 'user enters valid information' do
     expect(Message).to receive(:send_message).with("+11234567890",Message::WELCOME_MESSAGE)
     visit new_user_registration_path

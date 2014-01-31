@@ -1,20 +1,23 @@
 require 'spec_helper'
 
 feature 'user declares nag done' do
-  let(:user) {FactoryGirl.create(:user)}
-  let(:nag) {user.nags.first}
-  before :each do
-    user.nags.create(contents:"nag")
-    user
-  end
 
-  scenario 'user clicks "done"' do
+  scenario 'user clicks "done"', js: true do
+    user = FactoryGirl.create(:user)
+    nag = FactoryGirl.create(:nag, user: user)
+#    visit new_user_session_path
+#
+#    fill_in "Phone Number", with: user.phone_number
+#    fill_in "Password", with: user.password
+#
+#    save_and_open_page
     sign_in_as(user)
+    expect(Nag).to receive(:populate_sidekiq)
 
-    click_on "Done"
-    
+    check "Done"
+
     expect(page).to_not have_content(nag.contents)
-    expect(nag.status).to eq("done")
+    expect(Nag.first.status).to eq("done")
   end
 
 end
