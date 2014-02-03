@@ -13,9 +13,9 @@ class NagsController < ApplicationController
 
   def create
     @nag = current_user.nags.build(nag_params)
-    @nag.update_attribute(:next_ping_time, Time.now)
 
     if @nag.save
+      @nag.update_attribute(:next_ping_time, Time.now)
       @nag.generate_next_ping_time
       Nag.populate_sidekiq
       redirect_to mynags_path
