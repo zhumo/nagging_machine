@@ -11,15 +11,11 @@ class Nag < ActiveRecord::Base
   end
 
   def display_status
-    user.status == "stopped" ? "stopped" : status
+    user.status == "stopped" ? user.status : self.status
   end
 
   def generate_next_ping_time
     update_attribute(:next_ping_time, next_ping_time + rand(4..6).hours + rand(60).minutes)
-  end
-
-  def formatted_contents
-    contents[0].upcase + contents[1..-1]
   end
 
   def self.populate_sidekiq
@@ -37,7 +33,7 @@ class Nag < ActiveRecord::Base
   end
 
   def self.first_nag_to_be_pinged
-    Nag.where(status: "active").select{|nag| nag.user.status == "active" }.sort_by{|nag| nag.next_ping_time }.first
+    Nag.where(status: "active").joins(:user).where("users.status = 'active'").order("nags.next_ping_time").first
   end
   
 end

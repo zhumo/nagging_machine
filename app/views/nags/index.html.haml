@@ -19,7 +19,7 @@
           %td.nag-done.small-1.columns
             =check_box_tag 'Done', nag.id
           %td.nag-contents.small-12.columns
-            =nag.formatted_contents
+            =nag.contents.humanize
           -#%td.nag-edit
             =link_to "Edit", edit_nag_path(nag)
       -#if @nags.empty?

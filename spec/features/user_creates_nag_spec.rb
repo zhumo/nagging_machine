@@ -20,6 +20,6 @@ feature "user creates a new nag" do
 
     click_on "Submit"
 
-    expect(page).to have_content("can't be blank")
+    expect(page).to have_content("is too short")
   end
 end
