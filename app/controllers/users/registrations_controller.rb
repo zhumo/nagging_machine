@@ -56,10 +56,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     redirect_to mynags_path if !current_user.awaiting_confirmation?
   end
 
-  def change_phone_number
-    
-  end
-
   def edit
     render :edit
   end
