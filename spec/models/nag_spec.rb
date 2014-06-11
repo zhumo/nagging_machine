@@ -11,16 +11,16 @@ describe Nag do
     it {should belong_to(:user)}
   end
 
-  describe 'display_status method' do
+  describe '#display_status' do
     let(:user) {FactoryGirl.create(:user)}
     let(:nag) {FactoryGirl.create(:nag, user_id: user.id)}
 
-    it "should have an active status when the user is active" do
+    it "IT should have an active status when the user is active" do
       expect(user.status).to eq("active")
       expect(nag.display_status).to eq("active")
     end
 
-    it "should have a stopped status when the user is stopped" do
+    it "IT should have a stopped status when the user is stopped" do
       user.update_attribute(:status,"stopped")
       expect(user.status).to eq("stopped")
       expect(nag.display_status).to eq("stopped")
@@ -28,10 +28,10 @@ describe Nag do
 
   end
 
-  describe 'declare_done method' do
+  describe '#declare_done' do
     let(:user) {FactoryGirl.create(:user)}
     let(:nag) {FactoryGirl.create(:nag, user_id: user.id)}
-    it "should change the nag's status to done" do
+    it "IT should change the nag's status to done" do
       nag.declare_done
       expect(nag.status).to eq("done")
     end
@@ -46,7 +46,7 @@ describe Nag do
       end
     end
 
-    it "should send a ping time to NagWorker with the nag id if the nag ping time is before 10AM and after 11PM EST" do
+    it "IT should send a ping time to NagWorker with the nag id if the nag ping time is before 10AM and after 11PM EST" do
       first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.local(2013,1,1,18))
 
       expect(NagWorker).to receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
@@ -54,7 +54,7 @@ describe Nag do
       Nag.populate_sidekiq
     end
 
-    it "should send a ping time to NagWorker that is within the acceptable times with the nag id if the nag ping time is before 10AM EST" do
+    it "IT should send a ping time to NagWorker that is within the acceptable times with the nag id if the nag ping time is before 10AM EST" do
       first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.now - 1.day)
 
       expect(NagWorker).to receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
@@ -64,7 +64,7 @@ describe Nag do
       expect(first_nag.next_ping_time.hour).to_not be_between(4,15)
     end
 
-    it "should not send a ping time to NagWorker that is within the acceptable times with the nag id if the nag ping time is after 11PM EST" do
+    it "IT should not send a ping time to NagWorker that is within the acceptable times with the nag id if the nag ping time is after 11PM EST" do
       first_nag = FactoryGirl.create(:nag, user_id: @user_1.id, next_ping_time: Time.now - 1.day)
 
       expect(NagWorker).to receive(:perform_at).with(first_nag.next_ping_time, first_nag.id)
@@ -76,7 +76,7 @@ describe Nag do
   end
 
   describe ".first_nag_to_be_pinged" do
-    it "should return the earliest-timed nag of all active users" do
+    it "IT should return the earliest-timed nag of all active users" do
       user_1 = FactoryGirl.create(:user)
       user_2 = FactoryGirl.create(:user)
       user_stopped = FactoryGirl.create(:user, status: "stopped")
@@ -94,7 +94,7 @@ describe Nag do
   end
 
   describe "#generate_next_ping_time" do
-    it "should return a randomly generated time in the future" do
+    it "IT should return a randomly generated time in the future" do
       @nag = FactoryGirl.create(:nag, next_ping_time: Time.now - 2.day)
 
       old_time = @nag.next_ping_time
@@ -107,7 +107,7 @@ describe Nag do
   end
 
   describe "create a new nag" do
-    it "should randomly generate a next_ping_time upon create" do
+    it "IT should randomly generate a next_ping_time upon create" do
       nag = FactoryGirl.create(:nag)
       expect(nag.next_ping_time).to be_present
     end

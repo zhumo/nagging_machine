@@ -18,27 +18,67 @@
 
 $(function(){ $(document).foundation(); });
 
-$(document).ready(function(){
+function handleNagUpdate(){
+  newNagContents = createdInput.val();
+  $.ajax({
+    type: "PATCH",
+    url: "/nags/" + nagId,
+    data: {
+      nag: {
+        contents: newNagContents
+      }
+    }
+  }).done(function() {
+    createdForm.remove();
+    clickedCell.append("<span class='nag-contents'>" + newNagContents + "</span>");
+    bindNagUpdate();
+  }).fail(function() {
+    alert("Update Unsuccessful.");
+    createdForm.remove();
+    clickedCell.append("<span class='nag-contents'>" + originalContents + "</span>");
+    bindNagUpdate();
+  });
+};
 
+function bindNagUpdate() {
+  $(".nag-contents").click(function(event) {
+    clickedContents = $(this);
+    originalContents = clickedContents.text().trim();
+    clickedCell = clickedContents.parent();
+    clickedContents.remove();
+    clickedCell.append("<form class='edit-nag-form'><input class='small-12 columns edit-nag-input'></form>");
+    createdInput = $(".edit-nag-input");
+    createdForm = $(".edit-nag-form");
+    createdInput.val(originalContents).focus();
+    nagId = clickedCell.parent().attr("id");
+
+    createdInput.focusout(function() {
+      handleNagUpdate();
+    });
+
+    createdForm.submit(function() {
+      handleNagUpdate();
+      return false
+    });
+  });
+};
+
+function bindNagDone() {
   $(".nag-done").click(function(event) {
 
     $.ajax({
       type: "PUT",
       url: '/nags/' + this.children[0].value + '/done',
-      dataType: 'json',
-      success: function(){
-        alert('success!!');
-      }
+      dataType: 'json'
     });
 
     $(this.parentElement).fadeOut();
   });
+};
 
-  $(".nag-contents").click(function(event) {
-    //ADD EDIT NAG IN HERE
-  });
-
-//  debugger;
+$(document).ready(function(){
+  bindNagUpdate();
+  bindNagDone();
 
 // ADD CREATE NAG HERE
 //  $(".nag").last().append("<tr></tr>");

@@ -28,61 +28,73 @@ describe User do
     it {should have_many(:nags).dependent(:destroy)}
   end
 
-  describe 'full_name method' do
+  describe '#full_name' do
     let(:user) {FactoryGirl.create(:user)}
     it "should return full name" do
       expect(user.full_name).to eq("Joe Schmoe")
     end
   end
 
-  describe 'active? method' do
-    it "should return true if the user's status is active" do
-      user = FactoryGirl.create(:user, status: "active")
-      expect(user.active?).to be_true
+  describe '#active?' do
+    context "WHEN the user's status is active" do
+      it "IT should return true" do
+        user = FactoryGirl.create(:user, status: "active")
+        expect(user.active?).to be_true
+      end
     end
 
-    it "should return false if the user's status is stopped" do
-      user = FactoryGirl.create(:user, status: "stopped")
-      expect(user.active?).to be_false
+    context "WHEN the user's status is not active" do
+      it "should return false" do
+        user = FactoryGirl.create(:user, status: "stopped")
+        expect(user.active?).to be_false
+      end
     end
   end
 
   describe "stopped? method" do
-    it "should return true if the user is stopped" do
-      user = FactoryGirl.create(:user, status: "stopped")
+    context "WHEN the user's status is stopped" do
+      it "IT should return true if the user is stopped" do
+        user = FactoryGirl.create(:user, status: "stopped")
 
-      expect(user.stopped?).to be_true
+        expect(user.stopped?).to be_true
+      end
     end
 
-    it "should return false if the user is 'active' or 'awaiting confirmation'" do
-      user = FactoryGirl.create(:user, status: "active")
+    context "WHEN the user's status is active" do
+      it "should return false if the user is 'active' or 'awaiting confirmation'" do
+        user = FactoryGirl.create(:user, status: "active")
 
-      expect(user.stopped?).to be_false
+        expect(user.stopped?).to be_false
 
-      user.status = "awaiting confirmation"
+        user.status = "awaiting confirmation"
 
-      expect(user.stopped?).to be_false
+        expect(user.stopped?).to be_false
+      end
     end
   end
 
-  describe "stop_all_nags method" do
-    it "should change an active user's status to 'stopped' and reset the job queue" do
-      user = FactoryGirl.create(:user, status: "active")
-      2.times {FactoryGirl.create(:nag, user: user)}
-      nag = FactoryGirl.create(:nag, user: user)
-      jobs_count = Sidekiq::ScheduledSet.new.clear
+  describe "#stop_all_nags" do
+    context "WHEN the user's status is active" do
+      it "IT should change the user's status to 'stopped' and reset the job queue" do
+        user = FactoryGirl.create(:user, status: "active")
+        2.times {FactoryGirl.create(:nag, user: user)}
+        nag = FactoryGirl.create(:nag, user: user)
+        jobs_count = Sidekiq::ScheduledSet.new.clear
 
-      user.stop_all_nags
+        user.stop_all_nags
 
-      expect(jobs_count).to eq(Sidekiq::ScheduledSet.new.clear)
-      expect(user.status).to eq("stopped")
+        expect(jobs_count).to eq(Sidekiq::ScheduledSet.new.clear)
+        expect(user.status).to eq("stopped")
+      end
     end
+    
+    context "WHEN the user's status is stopped" do
+      it "should not change an awaiting confirmation user's status to 'stopped'" do
+        user = FactoryGirl.create(:user, status: "awaiting confirmation")
 
-    it "should not change an awaiting confirmation user's status to 'stopped'" do
-      user = FactoryGirl.create(:user, status: "awaiting confirmation")
-
-      user.stop_all_nags
-      expect(user.status).to eq("awaiting confirmation")
+        user.stop_all_nags
+        expect(user.status).to eq("awaiting confirmation")
+      end
     end
   end
 

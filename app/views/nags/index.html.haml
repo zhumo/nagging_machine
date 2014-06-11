@@ -18,8 +18,9 @@
         %tr{id: nag.id, class: "small-12 columns"}
           %td.nag-done.small-1.columns
             =check_box_tag 'Done', nag.id
-          %td.nag-contents.small-12.columns
-            =nag.contents.humanize
+          %td.small-12.columns
+            %span.nag-contents
+              =nag.contents.capitalize.truncate(45)
           -#%td.nag-edit
             =link_to "Edit", edit_nag_path(nag)
       -#if @nags.empty?

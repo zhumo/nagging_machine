@@ -24,17 +24,13 @@ class NagsController < ApplicationController
     end
   end
 
-  def edit
-    @nag = Nag.find(params[:id])
-  end
-
   def update
     @nag = Nag.find(params[:id])
 
     if @nag.update(nag_params)
-      redirect_to mynags_path
+      head :ok
     else
-      render :edit
+      head :unprocessable_entity
     end
   end
 
