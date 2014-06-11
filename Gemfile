@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 gem 'devise'
-gem 'database_cleaner'
 gem 'twilio-ruby'
 gem 'sidekiq'
 gem 'sinatra', require: false
@@ -57,6 +56,7 @@ gem 'dotenv-rails'
 
 group :test do
   gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 group :test, :development do
