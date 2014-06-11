@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Nag do
   describe 'validations' do
-    it {should validate_presence_of(:contents)}
+    it {should ensure_length_of(:contents).is_at_least(1)}
     it {should validate_presence_of(:status)}
     it {should validate_presence_of(:user_id)}
   end
