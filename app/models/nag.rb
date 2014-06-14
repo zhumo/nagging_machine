@@ -20,7 +20,6 @@ class Nag < ActiveRecord::Base
 
   def self.populate_sidekiq
     @nag = Nag.find(self.first_nag_to_be_pinged_id)
-    binding.pry
 
     if @nag
       if @nag.next_ping_time.hour >= 4 && @nag.next_ping_time.hour < 15
