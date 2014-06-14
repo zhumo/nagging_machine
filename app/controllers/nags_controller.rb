@@ -7,10 +7,6 @@ class NagsController < ApplicationController
     @nags = @user.nags.where(status: "active").order(created_at: :desc)
   end
 
-  def new
-    @nag = Nag.new
-  end
-
   def create
     @nag = current_user.nags.build(nag_params)
 
@@ -18,9 +14,9 @@ class NagsController < ApplicationController
       @nag.update_attribute(:next_ping_time, Time.now)
       @nag.generate_next_ping_time
       Nag.populate_sidekiq
-      redirect_to mynags_path
+      head :ok
     else
-      render :new
+      head :unprocessable_entity
     end
   end
 

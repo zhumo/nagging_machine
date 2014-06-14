@@ -13,7 +13,7 @@ NaggingMachine::Application.routes.draw do
   put 'stop_nags', to: 'commands#stop'
   put 'restart_nags', to: 'commands#restart'
   post '/h', to: 'commands#hook'
-  resources :nags, only: [:new, :index, :create, :update]
+  resources :nags, only: [:index, :create, :update]
 #  resources :nags, only: [:index]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

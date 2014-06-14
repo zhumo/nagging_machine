@@ -19,8 +19,6 @@
               %li
                 =link_to "My Nags", mynags_path, class: "button secondary" if !current_page?(mynags_path)
               %li
-                =link_to "New Nag", new_nag_path, class: "button secondary" if !current_page?(new_nag_path)
-              %li
                 =link_to "Edit Account", edit_user_registration_path, class: "button secondary" if !current_page?(edit_user_registration_path)
               %li
                 -if current_user.active?

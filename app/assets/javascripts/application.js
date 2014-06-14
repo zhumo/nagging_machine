@@ -18,7 +18,7 @@
 
 $(function(){ $(document).foundation(); });
 
-function handleNagUpdate(){
+function handleNagUpdate(nagId, originalContents){
   newNagContents = createdInput.val();
   $.ajax({
     type: "PATCH",
@@ -40,8 +40,28 @@ function handleNagUpdate(){
   });
 };
 
-function bindNagUpdate() {
-  $(".nag-contents").click(function(event) {
+function handleNagNew(newNagContents) {
+  if(newNagContents != ""){
+    $.ajax({
+      type: "POST",
+      url: '/nags',
+      data: {
+        nag: {
+          contents: newNagContents
+        }
+      }
+    }).done(function() {
+      $("#nags-table-body").load("/mynags .nag-row");
+    }).fail(function() {
+      alert("Create unsuccessful");
+      $(".new-nag-contents-input").val("");
+    });
+  }
+}
+
+$(document).ready(function(){
+  //Handler for update nag
+  $(".nags-table").on("click",".nag-contents",function() {
     clickedContents = $(this);
     originalContents = clickedContents.text().trim();
     clickedCell = clickedContents.parent();
@@ -53,33 +73,34 @@ function bindNagUpdate() {
     nagId = clickedCell.parent().attr("id");
 
     createdInput.focusout(function() {
-      handleNagUpdate();
+      handleNagUpdate(nagId, originalContents);
     });
 
     createdForm.submit(function() {
-      handleNagUpdate();
+      handleNagUpdate(nagId, originalContents);
       return false
     });
   });
-};
 
-function bindNagDone() {
-  $(".nag-done").click(function(event) {
-
+  //Handler for done nag
+  $(".nags-table").on("click",".nag-done input[style != 'visibility: hidden;']", function(event) {
     $.ajax({
       type: "PUT",
-      url: '/nags/' + this.children[0].value + '/done',
+      url: '/nags/' + this.value + '/done',
       dataType: 'json'
     });
 
-    $(this.parentElement).fadeOut();
+    $(this.parentElement.parentElement).fadeOut();
   });
-};
 
-$(document).ready(function(){
-  bindNagUpdate();
-  bindNagDone();
-
-// ADD CREATE NAG HERE
-//  $(".nag").last().append("<tr></tr>");
+  //Handler for new nag
+  $(".nags-table").on("focusout",".new-nag-contents-input", function(){
+    newNagContents = $(this).val();
+    $(this).val("");
+    handleNagNew(newNagContents);
+  });
+  $(".nags-table").on("submit",".new-nag-form", function(){
+    $(".new-nag-contents-input").trigger("focusout");
+    return false;
+  });
 });

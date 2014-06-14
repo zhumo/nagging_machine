@@ -9,23 +9,21 @@
   %table.nags-table.small-11.small-centered.columns
     %thead.row
       %tr.small-12.columns
-        .row
-          %th
-          %th
-            Remind me to:
-    %tbody.row
-      -@nags.each do |nag|
-        %tr{id: nag.id, class: "small-12 columns"}
-          %td.nag-done.small-1.columns
-            =check_box_tag 'Done', nag.id
+        %th
+        %th
+          Nag Content
+      %tbody#nags-table-body
+        -@nags.each do |nag|
+          %tr.nag-row.small-12.columns{id: nag.id}
+            %td.nag-done.small-1.columns
+              =check_box_tag 'Done', nag.id
+            %td.small-12.columns
+              %span.nag-contents
+                =nag.contents.capitalize.truncate(45)
+        %tr.nag-row.new-nag-row.small-12.columns
+          %td.nag-done.empty.small-1.columns
+            %input{type: "checkbox", style: "visibility: hidden;"}
           %td.small-12.columns
-            %span.nag-contents
-              =nag.contents.capitalize.truncate(45)
-          -#%td.nag-edit
-            =link_to "Edit", edit_nag_path(nag)
-      -#if @nags.empty?
-        %tr{id: "no-nags"}
-          %td.nag-done
-          %td.nag-contents
-            Create a new nag
+            %form.new-nag-form
+              %input.new-nag-contents-input.small-12.columns{placeholder: "Remind me to..."}
 
