@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
 
   def restart_all_nags
     update_attribute(:status, "active") if status == "stopped"
-    if Nag.any?
+    if Nag.where(user_id: self.id, status: "active").present?
       self.nags.each do |nag|
         until nag.next_ping_time.to_i > Time.now.to_i
           nag.generate_next_ping_time
