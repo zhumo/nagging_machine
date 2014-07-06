@@ -19,7 +19,7 @@ class Nag < ActiveRecord::Base
   end
 
   def self.populate_sidekiq
-    @nag = Nag.find(self.first_nag_to_be_pinged_id)
+    @nag = Nag.find_by(id: self.first_nag_to_be_pinged_id)
 
     if @nag
       if @nag.next_ping_time.hour >= 4 && @nag.next_ping_time.hour < 15
@@ -33,7 +33,7 @@ class Nag < ActiveRecord::Base
   end
 
   def self.first_nag_to_be_pinged_id
-    Nag.where(status: "active").joins(:user).where("users.status = 'active'").order("nags.next_ping_time").first.id
+    Nag.where(status: "active").joins(:user).where("users.status = 'active'").order("nags.next_ping_time").first.try(:id)
   end
   
 end
