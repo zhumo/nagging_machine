@@ -14,7 +14,16 @@ NaggingMachine::Application.routes.draw do
   put 'restart_nags', to: 'commands#restart'
   post '/h', to: 'commands#hook'
   resources :nags, only: [:index, :create, :update]
-#  resources :nags, only: [:index]
+
+  namespace :api do
+    resources :nags, only: [:index, :create]
+    match "nags", to: "nags#options", via: :options
+    resources :sessions, only: [:create]
+    ["sessions", "nags"].each do |options_endpoint|
+      match options_endpoint, to: "api#cors_preflight", via: :options
+    end
+  end
+  #  resources :nags, only: [:index]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

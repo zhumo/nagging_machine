@@ -35,4 +35,5 @@ class NagsController < ApplicationController
   def nag_params
     params.require('nag').permit(:contents)
   end
+
 end
