@@ -16,8 +16,11 @@ NaggingMachine::Application.routes.draw do
   resources :nags, only: [:index, :create, :update]
 
   namespace :api do
-    resources :nags, only: [:index, :create]
-    match "nags", to: "nags#options", via: :options
+    resources :nags, only: [:index, :create] do
+      member do
+        get 'done', to: "nags#done"
+      end
+    end
     resources :sessions, only: [:create]
     ["sessions", "nags"].each do |options_endpoint|
       match options_endpoint, to: "api#cors_preflight", via: :options

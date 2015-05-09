@@ -1,4 +1,5 @@
 class Api::ApiController < ActionController::Base
+  protect_from_forgery with: :null_session
 
   def cors_preflight
     headers["Access-Control-Allow-Origin"] = "http://localhost:8888"
